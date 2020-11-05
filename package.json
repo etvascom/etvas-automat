@@ -1,0 +1,29 @@
+{
+  "name": "etvas-automat",
+  "version": "0.0.1",
+  "description": "AI Driven Value Added Services injector script",
+  "main": "dist/etvas-automat.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ai",
+    "etvas",
+    "library"
+  ],
+  "author": "Alex Sofronie <alex.sofronie@etvas.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-transform-runtime": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "babel-loader": "^8.0.5",
+    "lodash": "^4.17.11",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.2"
+  }
+}

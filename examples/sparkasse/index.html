@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+    />
+    <link rel="stylesheet" type="text/css" href="css/styles.css"
+  </head>
+  <body>
+    <script src="/etvas-automat.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <div class="cardLink" id="etvas-link">
+      <div class="header">
+        <p>Value Added Services with Etvas</p>
+        <a href="#" class="etvas-close" style="color: white">
+          <i class="fas fa-times"></i>
+        </a>
+      </div>
+
+      <div class="containerLink">
+        <p>
+          We work with Etvas to deliver relevant and personalised value added
+          services to you. In order to deliver this service Etvas needs access
+          to some of your personal information such as transaction and account
+          data. Sharing this information does not allow Etvas to perform
+          transactions on your account or on your behalf.
+        </p>
+      </div>
+
+      <div class="actions">
+        <button class="button accept" id="etvas-connect">CONNECT</button>
+        <a href="#" class="close etvas-close"> No, thanks!</a>
+      </div>
+    </div>
+
+    <ul class="topbar">
+      <li class="active"><a href="#">PrivatKunden</a></li>
+      <li><a href="#">Firmenkunden</a></li>
+    </ul>
+    <header class="main-header">
+      <img src="/media/haspa-logo-desktop.png" alt="Haspa" />
+      <div class="identity">
+        <b>Sören Timm</b>
+        <div>
+          <a href="#">
+            <i class="fas fa-power-off"></i>
+            <span>Logout</span>
+          </a>
+          <a href="#">
+            <i class="fas fa-history"></i>
+            <span>5 minuten</span>
+          </a>
+        </div>
+      </div>
+      <div class="toolbox">
+        <div class="search-field">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Was suchen Sie?" />
+        </div>
+        <div class="language-selector">
+          <span>DE</span>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <ul class="nav-main mt-4" role="navigation">
+        <li class="active narrow">
+          <a href="#"
+            ><span><i class="fas fa-home"></i></span
+          ></a>
+        </li>
+        <li class="accent">
+          <a href="#"><span>Online-banking</span></a>
+        </li>
+        <li>
+          <a href="#"><span>Privatkunden</span></a>
+        </li>
+        <li>
+          <a href="#"><span>Firmenkunden</span></a>
+        </li>
+        <li>
+          <a href="#"><span>Private banking</span></a>
+        </li>
+        <li>
+          <a href="#"><span>Ihre Haspa</span></a>
+        </li>
+        <li>
+          <a href="#"><span>Services &amp; Hilfe</span></a>
+        </li>
+      </ul>
+      <div class="card mt-2">
+        <div class="account-selector">
+          <div class="field is-top-align">
+            <label>Konto/Depot<sup>*</sup>:</label>
+            <div class="control control-account">
+              <img src="media/haspa-logo-mobile-olb.png" />
+              <div class="details">
+                <h5>Haspa GeschäftsgiroOnline</h5>
+                <span>DE81 2005 0550 <b>1500 4567 89</b></span>
+                <span>ETVAS GMBH</span>
+              </div>
+              <i class="fas fa-caret-down"></i>
+            </div>
+          </div>
+          <div class="field is-centered">
+            <label>Zeitraum<sup>*</sup>:</label>
+            <div class="control-dates">
+              <input type="date" />
+              <input type="date" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>&nbsp;</div>
+      <div class="card mt-2">
+        <div class="transactions-panel" id="transactions-panel">
+          <div style="text-align: center; padding: 40px 0; font-size: 48px">
+            <i class="fas fa-spin fa-spinner"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./bundle.js" charset="utf-8" defer></script>
+    <script>
+      $('.etvas-close').on('click', function (event) {
+        event.preventDefault()
+        $('#etvas-link').remove()
+      })
+      $('#etvas-connect').on('click', function (event) {
+        event.preventDefault()
+        etvasAutomat.initialize()
+      })
+    </script>
+  </body>
+</html>

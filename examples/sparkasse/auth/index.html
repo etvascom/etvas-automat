@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Etvas Login</title>
+  </head>
+  <body>
+    <script src="amazon-cognito-auth.min.js"></script>
+    this is iframe
+    <pre>
+    <script>
+      var authData = {
+        ClientId: '6uqblqh25njdubd1fi178e2367', // Your client id here
+        AppWebDomain:
+          'etvas-id-development-symbiot.auth.eu-central-1.amazoncognito.com',
+        TokenScopesArray: [
+          'phone',
+          'email',
+          'profile',
+          'openid',
+          'aws.cognito.signin.user.admin'
+        ], // e.g.['phone', 'email', 'profile','openid', 'aws.cognito.signin.user.admin'],
+        RedirectUriSignIn: 'http://localhost:3001/auth',
+        RedirectUriSignOut: 'http://localhost:3001/auth',
+        IdentityProvider: 'SparkasseFake', // e.g. 'Facebook',
+        UserPoolId: 'eu-central-1_PqETGY4gN', // Your user pool id here
+        AdvancedSecurityDataCollectionFlag: false
+        // Storage: storage
+      }
+      var hasCode = window.location.search.indexOf('code') > 0
+      var auth = new AmazonCognitoIdentity.CognitoAuth(authData)
+      auth.useCodeGrantFlow()
+
+      auth.userhandler = {
+        onSuccess: function (result) {
+          window.opener.postMessage({channel: 'etvas-channel', result })
+          // window.close()
+        },
+        onFailure: function (error) {
+          window.opener.postMessage({ channel: 'etvas-channel', error })
+        }
+      }
+
+      if (!hasCode) {
+        auth.getSession()
+      } else {
+        auth.parseCognitoWebResponse(window.location.href)
+      }
+    </script>
+    </pre>
+  </body>
+</html>

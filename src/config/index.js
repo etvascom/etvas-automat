@@ -1,2 +1,2 @@
-export * from './init'
+export * from './initialize'
 export * from './config'

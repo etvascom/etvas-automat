@@ -34,11 +34,11 @@
 
       auth.userhandler = {
         onSuccess: function (result) {
-          window.opener.postMessage({channel: 'etvas-channel', result })
-          // window.close()
+          window.opener.postMessage({channel: 'etvas-channel', result }, '*')
+          window.close()
         },
         onFailure: function (error) {
-          window.opener.postMessage({ channel: 'etvas-channel', error })
+          window.opener.postMessage({ channel: 'etvas-channel', error }, '*')
         }
       }
 

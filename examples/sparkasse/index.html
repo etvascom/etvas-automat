@@ -8,16 +8,21 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
     />
-    <link rel="stylesheet" type="text/css" href="css/styles.css"
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <style type="text/css">
+      .suggestion {
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
-    <script src="/etvas-automat.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="etvas-automat.js"></script>
 
     <div class="cardLink" id="etvas-link">
       <div class="header">
         <p>Value Added Services with Etvas</p>
-        <a href="#" class="etvas-close" style="color: white">
+        <a style="color: white" href="#" class="etvas-close">
           <i class="fas fa-times"></i>
         </a>
       </div>
@@ -125,15 +130,50 @@
         </div>
       </div>
     </div>
-    <script src="./bundle.js" charset="utf-8" defer></script>
+    <script src="./bundle.js" charset="utf-8"></script>
     <script>
-      $('.etvas-close').on('click', function (event) {
+      var transactionHtmlTemplate = `<a href="#" class="transaction">
+          <span class="details">
+            <h3>__title__</h3>
+            <p>__type__: __description__</p>
+            <small>__date__ | __provider__</small>
+          </span>
+          <span class="amount __sense__">__amount__ EUR</span>
+        </a><div class="suggestion" id="transaction-__id__" style="display:none"></div>`
+      $.getJSON('/data/transactions.json', function (result) {
+        var result = result.map(function (transaction) {
+          var html = transactionHtmlTemplate
+          html = html.replace(/__id__/g, transaction.id)
+          html = html.replace(/__title__/g, transaction.title)
+          html = html.replace(/__type__/g, transaction.type)
+          html = html.replace(/__description__/g, transaction.description)
+          html = html.replace(/__date__/g, transaction.date)
+          html = html.replace(/__provider__/g, transaction.provider)
+          const sense = transaction.amount > 0 ? 'positive' : 'negative'
+          html = html.replace(/__sense__/g, sense)
+          html = html.replace(/__amount__/g, transaction.amount.toFixed(2))
+          return html
+        })
+
+        $('#transactions-panel').html(result.join(''))
+      }).fail(function () {
+        console.log('An error has occurred.')
+      })
+
+      $('.etvas-close').click(function (event) {
         event.preventDefault()
         $('#etvas-link').remove()
       })
-      $('#etvas-connect').on('click', function (event) {
+      $('#etvas-connect').click(function (event) {
         event.preventDefault()
         etvasAutomat.initialize()
+        setTimeout(() => {
+          $('#etvas-link').remove()
+        }, 30)
+      })
+      $(document).on('click', '.transaction', function (event) {
+        event.preventDefault()
+        $(this).next('.suggestion').slideToggle()
       })
     </script>
   </body>

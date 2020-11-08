@@ -3154,19 +3154,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _aws
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _injectTemplate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./injectTemplate */ \"./src/js/injectTemplate.js\");\n/* harmony import */ var _amplify_configure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./amplify/configure */ \"./src/js/amplify/configure.js\");\n/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./login */ \"./src/js/login/index.js\");\n\n\n\n\n//# sourceURL=webpack:///./src/js/index.js?");
-
-/***/ }),
-
-/***/ "./src/js/injectTemplate.js":
-/*!**********************************!*\
-  !*** ./src/js/injectTemplate.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* eslint-env jquery */\n/* harmony default export */ __webpack_exports__[\"default\"] = ((function onReceiveTransactions() {\n  var template = \"<a href=\\\"#\\\" class=\\\"transaction\\\">\\n          <span class=\\\"details\\\">\\n            <h3>__title__</h3>\\n            <p>__type__: __description__</p>\\n            <small>__date__ | __provider__</small>\\n          </span>\\n          <span class=\\\"amount __sense__\\\">__amount__ EUR</span>\\n        </a>\";\n  $.getJSON('/data/transactions.json', function (result) {\n    var html = result.map(function (transaction) {\n      var html = template;\n      html = html.replace(/__title__/g, transaction.title);\n      html = html.replace(/__type__/g, transaction.type);\n      html = html.replace(/__description__/g, transaction.description);\n      html = html.replace(/__date__/g, transaction.date);\n      html = html.replace(/__provider__/g, transaction.provider);\n      var sense = transaction.amount > 0 ? 'positive' : 'negative';\n      html = html.replace(/__sense__/g, sense);\n      html = html.replace(/__amount__/g, transaction.amount.toFixed(2));\n      return html;\n    });\n    $('#transactions-panel').html(html.join(''));\n  }).fail(function () {\n    console.log('An error has occurred.');\n  });\n})());\n\n//# sourceURL=webpack:///./src/js/injectTemplate.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _amplify_configure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./amplify/configure */ \"./src/js/amplify/configure.js\");\n/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./login */ \"./src/js/login/index.js\");\n\n\n\n//# sourceURL=webpack:///./src/js/index.js?");
 
 /***/ }),
 

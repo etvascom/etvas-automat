@@ -1,4 +1,4 @@
-import { initialize } from './config'
+import { initialize, createModal } from './config'
 import { dom } from '@lib/dom'
 
 const display = message => {

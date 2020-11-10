@@ -1,5 +1,7 @@
 import { defaults } from './defaults'
 import { config } from './config'
+import { createModal, closeAndDeleteModal } from './modal'
+import { dom } from '@lib/dom'
 
 const createIframe = (url, styles) => {
   const iframe = document.createElement('IFRAME')
@@ -28,11 +30,28 @@ export const initialize = function (options = {}) {
     ...options
   })
 
-  window.open(
-    'http://localhost:3000/oidc-auth',
-    'etvasAuth',
-    'location=no,toolbar=false,resizable=no,scrollbars=false,status=false,width=10,height=10,left:0,top:0'
-  )
+  // open modal and append it to body
+  createModal()
+
+  // CONNECT BUTTON PRESSED
+  function connect(event) {
+    event.preventDefault()
+    window.open(
+      'http://localhost:3000/oidc-auth',
+      'etvasAuth',
+      'location=no,toolbar=false,resizable=no,scrollbars=false,status=false,width=10,height=10,left:0,top:0'
+    )
+    closeAndDeleteModal()
+  }
+
+  document.getElementById('etvas-connect').addEventListener('click', connect)
+
+  document
+    .getElementById('etvas-close')
+    .addEventListener('click', closeAndDeleteModal)
+  document
+    .getElementById('etvas-close-x')
+    .addEventListener('click', closeAndDeleteModal)
 
   const onEtvasMessage = async event => {
     const { data } = event

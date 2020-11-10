@@ -18,30 +18,7 @@
   <body>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="etvas-automat.js"></script>
-
-    <div class="cardLink" id="etvas-link">
-      <div class="header">
-        <p>Value Added Services with Etvas</p>
-        <a style="color: white" href="#" class="etvas-close">
-          <i class="fas fa-times"></i>
-        </a>
-      </div>
-
-      <div class="containerLink">
-        <p>
-          We work with Etvas to deliver relevant and personalised value added
-          services to you. In order to deliver this service Etvas needs access
-          to some of your personal information such as transaction and account
-          data. Sharing this information does not allow Etvas to perform
-          transactions on your account or on your behalf.
-        </p>
-      </div>
-
-      <div class="actions">
-        <button class="button accept" id="etvas-connect">CONNECT</button>
-        <a href="#" class="close etvas-close"> No, thanks!</a>
-      </div>
-    </div>
+    <button id="etvas-connect2">connect</button>
 
     <ul class="topbar">
       <li class="active"><a href="#">PrivatKunden</a></li>
@@ -160,17 +137,11 @@
         console.log('An error has occurred.')
       })
 
-      $('.etvas-close').click(function (event) {
-        event.preventDefault()
-        $('#etvas-link').remove()
-      })
-      $('#etvas-connect').click(function (event) {
+      $('#etvas-connect2').click(function (event) {
         event.preventDefault()
         etvasAutomat.initialize()
-        setTimeout(() => {
-          $('#etvas-link').remove()
-        }, 30)
       })
+
       $(document).on('click', '.transaction', function (event) {
         event.preventDefault()
         $(this).next('.suggestion').slideToggle()

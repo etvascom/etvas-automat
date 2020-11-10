@@ -46,12 +46,9 @@ export const initialize = function (options = {}) {
 
   document.getElementById('etvas-connect').addEventListener('click', connect)
 
-  document
-    .getElementById('etvas-close')
-    .addEventListener('click', closeAndDeleteModal)
-  document
-    .getElementById('etvas-close-x')
-    .addEventListener('click', closeAndDeleteModal)
+  document.querySelectorAll('.etvas-close').forEach(function (item) {
+    item.addEventListener('click', closeAndDeleteModal)
+  })
 
   const onEtvasMessage = async event => {
     const { data } = event

@@ -63,7 +63,7 @@ export const modal = `
 <div style="${css.cardLink}" id="etvas-link">
 <div style="${css.header}">
   <p>Value Added Services with Etvas</p>
-  <a style="color: white" href="#" class="etvas-close" id="etvas-close-x" >
+  <a style="color: white" href="#" class="etvas-close" >
     <i class="fas fa-times"></i>
   </a>
 </div>
@@ -80,7 +80,7 @@ export const modal = `
 
 <div style="${css.actions}">
   <button style="${css.button}" id="etvas-connect">CONNECT</button>
-  <a href="#" style="${css.aLink}" id="etvas-close"> No, thanks!</a>
+  <a href="#" style="${css.aLink}" class="etvas-close" > No, thanks!</a>
 </div>
 </div>
 `

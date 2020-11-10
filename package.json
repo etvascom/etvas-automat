@@ -5,6 +5,10 @@
   "main": "dist/etvas-automat.js",
   "scripts": {
     "build": "./node_modules/.bin/env-cmd -f .env.development.local webpack",
+    "build:development": "./node_modules/.bin/env-cmd -e development webpack",
+    "build:production": "./node_modules/.bin/env-cmd -e production webpack",
+    "deploy:development": "npm run build:development && sh ./deploy-development",
+    "deploy:production": "npm run build:production && sh ./deploy-production",
     "serve": "node dev-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

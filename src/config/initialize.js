@@ -32,12 +32,12 @@ export const initialize = function (options = {}) {
 
   // open modal and append it to body
   createModal()
-
+  
   // CONNECT BUTTON PRESSED
   function connect(event) {
     event.preventDefault()
     window.open(
-      'http://localhost:3000/oidc-auth',
+      process.env.OIDC_AUTH,
       'etvasAuth',
       'location=no,toolbar=false,resizable=no,scrollbars=false,status=false,width=10,height=10,left:0,top:0'
     )
@@ -62,7 +62,7 @@ export const initialize = function (options = {}) {
         const el = document.getElementById(`transaction-${transactionId}`)
         const iframe = createIframe(
           // /embed/:lang/product/:pid
-          `http://localhost:3000/embed/en/product/${productId}`,
+          `${process.env.ETVAS_SUGGESTION}${productId}`,
           'border:none;width:480px;height:240px;display:block;margin:10px auto;'
         )
         el.appendChild(iframe)

@@ -4,7 +4,7 @@
   "description": "AI Driven Value Added Services injector script",
   "main": "dist/etvas-automat.js",
   "scripts": {
-    "build": "webpack",
+    "build": "./node_modules/.bin/env-cmd -f .env.development.local webpack",
     "serve": "node dev-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,6 +20,7 @@
     "@babel/plugin-transform-runtime": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "babel-loader": "^8.0.5",
+    "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "lodash": "^4.17.11",
     "webpack": "^4.29.6",

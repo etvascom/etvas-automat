@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   mode: process.env.NODE_ENV || 'production',
@@ -28,5 +29,12 @@ module.exports = {
       '@': path.resolve(__dirname, 'src/'),
       '@lib': path.resolve(__dirname, 'src/lib')
     }
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env.OIDC_AUTH": JSON.stringify(process.env.OIDC_AUTH), 
+      "process.env.ETVAS_SUGGESTION": JSON.stringify(process.env.ETVAS_SUGGESTION)
+    }), 
+    
+  ]
 }

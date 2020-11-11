@@ -1,8 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
 
+console.info('ENV IS', process.env)
+
 module.exports = {
-  mode: process.env.NODE_ENV || 'production',
+  mode: process.env.BUILD_TYPE || 'production',
   entry: {
     main: './src/index.js'
   },
@@ -23,7 +25,7 @@ module.exports = {
     ]
   },
   devtool:
-    process.env.NODE_ENV === 'production' ? 'source-map' : 'eval-source-map',
+    process.env.BUILD_TYPE === 'production' ? 'source-map' : 'eval-source-map',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/'),
@@ -32,7 +34,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.ETVAS_BASE_URL': JSON.stringify(process.env.OIDC_AUTH)
+      'process.env.ETVAS_BASE_URL': JSON.stringify(process.env.ETVAS_BASE_URL)
     })
   ]
 }

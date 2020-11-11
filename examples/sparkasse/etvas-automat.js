@@ -1,1 +1,0 @@
-../../dist/etvas-automat.js

@@ -5,6 +5,7 @@
   "main": "dist/etvas-automat.js",
   "scripts": {
     "build": "webpack",
+    "deploy": "npm run build && sh ./deploy.sh",
     "serve": "node dev-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

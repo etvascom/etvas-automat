@@ -32,9 +32,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      "process.env.OIDC_AUTH": JSON.stringify(process.env.OIDC_AUTH), 
-      "process.env.ETVAS_SUGGESTION": JSON.stringify(process.env.ETVAS_SUGGESTION)
-    }), 
-    
+      'process.env.ETVAS_BASE_URL': JSON.stringify(process.env.OIDC_AUTH)
+    })
   ]
 }

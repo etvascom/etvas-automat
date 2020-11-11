@@ -37,7 +37,7 @@ export const initialize = function (options = {}) {
   function connect(event) {
     event.preventDefault()
     window.open(
-      'http://localhost:3000/oidc-auth',
+      `${process.env.ETVAS_BASE_URL}/oidc-auth`,
       'etvasAuth',
       'location=no,toolbar=false,resizable=no,scrollbars=false,status=false,width=10,height=10,left:0,top:0'
     )
@@ -60,9 +60,10 @@ export const initialize = function (options = {}) {
       const matches = await getMatches(/*transations*/)
       matches.forEach(({ productId, transactionId }, idx) => {
         const el = document.getElementById(`transaction-${transactionId}`)
+        const locale = config.get('locale', 'en')
         const iframe = createIframe(
           // /embed/:lang/product/:pid
-          `http://localhost:3000/embed/en/product/${productId}`,
+          `${process.env.ETVAS_BASE_URL}/embed/${locale}/product/${productId}`,
           'border:none;width:480px;height:240px;display:block;margin:10px auto;'
         )
         el.appendChild(iframe)

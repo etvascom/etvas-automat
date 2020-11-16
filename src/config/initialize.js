@@ -2,6 +2,7 @@ import { defaults } from './defaults'
 import { config } from './config'
 import { createModal, closeAndDeleteModal } from './modal'
 import { dom } from '@lib/dom'
+import { openDetails } from './detailsIframe'
 
 const createIframe = (url, styles) => {
   const iframe = document.createElement('IFRAME')
@@ -53,6 +54,11 @@ export const initialize = function (options = {}) {
   const onEtvasMessage = async event => {
     const { data } = event
     if (data?.channel !== 'etvas-channel') {
+      return
+    }
+
+    if (event.data.action === 'open-details') {
+      openDetails(event.data.pId)
       return
     }
 

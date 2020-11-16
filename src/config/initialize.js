@@ -1,7 +1,7 @@
 import { defaults } from './defaults'
 import { config } from './config'
 import { createModal, closeAndDeleteModal } from './modal'
-import { dom } from '@lib/dom'
+import { dom, listen } from '@lib/dom'
 
 const createIframe = (url, styles) => {
   const iframe = document.createElement('IFRAME')
@@ -44,6 +44,7 @@ export const initialize = function (options = {}) {
     closeAndDeleteModal()
   }
 
+  document.getElementById('etvas-connect').removeEventListener('click', connect)
   document.getElementById('etvas-connect').addEventListener('click', connect)
 
   document.querySelectorAll('.etvas-close').forEach(function (item) {

@@ -69,7 +69,7 @@ export const initialize = function (options = {}) {
         const locale = config.get('locale', 'en')
         const iframe = createIframe(
           // /embed/:lang/product/:pid
-          `${process.env.ETVAS_BASE_URL}/embed/${locale}/product/${productId}`,
+          `${process.env.ETVAS_BASE_URL}/embed/${locale}/product/${productId}/?cache=${Date.now()}`,
           'border:none;width:480px;height:240px;display:block;margin:10px auto;'
         )
         el.appendChild(iframe)

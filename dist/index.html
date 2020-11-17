@@ -69,6 +69,11 @@
           productId: '54327b79-6ed0-461b-b6c3-9c0901d74937'
         }
       ]
+
+      function displayEtvasRandomProductCard(placeholder) {
+        const idx = Math.floor(Math.random() * productIds.length)
+        etvasAutomat.showProductCard(productIds[idx].productId, placeholder)
+      }
     </script>
     <div class="hero">
       <div></div>
@@ -96,16 +101,10 @@
     <div class="hero">
       <a name="product-card" id="product-card"></a>
       <div style="text-align: center">
-        <script>
-          function displayProduct() {
-            const idx = Math.floor(Math.random() * productIds.length)
-            etvasAutomat.showProductCard(
-              productIds[idx].productId,
-              'product-card-display'
-            )
-          }
-        </script>
-        <button class="action" onclick="displayProduct()">
+        <button
+          class="action"
+          onclick="displayEtvasRandomProductCard('product-card-display')"
+        >
           Display a product card in a div
         </button>
         <div id="product-card-display">
@@ -126,6 +125,50 @@
           >After the product card is loaded, click on See Product and check your
           console!</small
         >
+      </div>
+      <div>
+        <a class="next" href="#product-card-details"></a>
+      </div>
+    </div>
+    <div class="hero even">
+      <div
+        id="full-screen-product"
+        style="
+          display: none;
+          width: 100vw;
+          height: 100vh;
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: 1000;
+        "
+      ></div>
+      <a name="product-card-details" id="product-card-details"></a>
+      <div style="text-align: center">
+        <script>
+          function displayFullScreenDetails() {
+            const idx = Math.floor(Math.random() * productIds.length)
+            const placeholder = document.getElementById('full-screen-product')
+            placeholder.style.display = 'block'
+            document.body.style.overflow = 'hidden'
+            etvasAutomat.showProductDetails(
+              productIds[idx].productId,
+              placeholder
+            )
+            const button = document.createElement('BUTTON')
+            button.innerHTML = '&times; Close details'
+            button.style = 'position:absolute;top:0;right:0;'
+            button.onclick = function () {
+              placeholder.style.display = 'none'
+              document.body.style = undefined
+              placeholder.innerHTML = ''
+            }
+            placeholder.appendChild(button)
+          }
+        </script>
+        <button class="action" onclick="displayFullScreenDetails()">
+          Display product details
+        </button>
       </div>
       <div></div>
     </div>

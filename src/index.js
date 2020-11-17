@@ -1,4 +1,7 @@
-import { initialize } from '@/config'
-import { showConnect, showProductCard } from '@/usecases'
+// install the listeners
+import '@/lib/bus'
 
-export { initialize, showConnect, showProductCard }
+import { initialize } from '@/config'
+import { showConnect, showProductCard, showProductDetails } from '@/usecases'
+
+export { initialize, showConnect, showProductCard, showProductDetails }

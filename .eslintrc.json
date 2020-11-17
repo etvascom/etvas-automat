@@ -5,6 +5,9 @@
     "es6": true
   },
   "extends": ["standard", "plugin:import/errors", "plugin:import/warnings"],
+  "settings": {
+    "import/resolver": "webpack"
+  },
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"

@@ -1,8 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 
-console.info('ENV IS', process.env)
-
 module.exports = {
   mode: process.env.BUILD_TYPE || 'production',
   entry: {
@@ -28,9 +26,7 @@ module.exports = {
     process.env.BUILD_TYPE === 'production' ? 'source-map' : 'eval-source-map',
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src/'),
-      '@lib': path.resolve(__dirname, 'src/lib'),
-      '@config': path.resolve(__dirname, 'src/config')
+      '@': path.resolve(__dirname, 'src/')
     }
   },
   plugins: [

@@ -1,4 +1,4 @@
-import { clone } from '@lib/clone'
+import { clone } from '@/lib/clone'
 
 export default () => {
   let repo = {}

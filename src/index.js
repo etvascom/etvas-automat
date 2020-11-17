@@ -1,8 +1,4 @@
-import { initialize, createModal } from './config'
-import { dom } from '@lib/dom'
+import { initialize } from '@/config'
+import { showConnect, showProductCard } from '@/usecases'
 
-const display = message => {
-  dom.write(`Message: ${message}`)
-}
-
-export { initialize, display }
+export { initialize, showConnect, showProductCard }

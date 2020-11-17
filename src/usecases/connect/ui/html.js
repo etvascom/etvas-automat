@@ -1,22 +1,22 @@
-import { bgImg } from './b64BgImg'
+import bg from './bg'
 
 export const css = {
-  cardLink: `
+  card: `
     padding: 10px;
-    background-image: ${bgImg} ;
+    background-image: url(data:image/png;base64,${bg});
     background-position: center center;
     width: 400px;
     display: flex;
     flex-direction: column;
     font-size: 15px;
     border-radius: 10px;
-    background-color: #ffffff;
+    background-color: red;
     color: #fff;
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    z-index: 10;
+    z-index: 10000;
     box-shadow: 0 0 40px #999999;`,
   container: `
     padding: 0 15px;
@@ -38,39 +38,35 @@ export const css = {
     text-align: center;
   `,
   button: `width: 100%;
-  border: none;
-  color: white;
-  padding: 15px 1px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  margin: 4px 2px;
-  cursor: pointer;
-  transition-duration: 0.4s;
-  border-radius: 5px;
-  font-weight: bold;
-  background-color: #00c0fc;
-  margin-bottom: 15px;
+    border: none;
+    color: white;
+    padding: 15px 1px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #00c0fc;
+    margin-bottom: 15px;
   `,
-  aLink: `
-  color: #d3d3d3;
-  text-decoration: underline;
+  link: `
+    color: #d3d3d3;
+    text-decoration: underline;
   `
 }
 
-export const modal = `
-<div style="${css.cardLink}" id="etvas-link">
+export const contents = `
 <div style="${css.header}">
   <p>Value Added Services with Etvas</p>
-  <a style="color: white" href="#" class="etvas-close" >
-    <i class="fas fa-times"></i>
-  </a>
+  <a style="color: white" href="#" class="etvas-connect-close">&times;</a>
 </div>
-
 <div>
   <p style="${css.container}">
-    We work with Etvas to deliver relevant and personalised value added
+    We work with Etvas to deliver relevant and personalized value added
     services to you. In order to deliver this service Etvas needs access
     to some of your personal information such as transaction and account
     data. Sharing this information does not allow Etvas to perform
@@ -80,7 +76,6 @@ export const modal = `
 
 <div style="${css.actions}">
   <button style="${css.button}" id="etvas-connect">CONNECT</button>
-  <a href="#" style="${css.aLink}" class="etvas-close" > No, thanks!</a>
-</div>
+  <a href="#" style="${css.link}" class="etvas-connect-close">No, thanks!</a>
 </div>
 `

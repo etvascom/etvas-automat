@@ -1,6 +1,23 @@
 const path = require('path')
 const webpack = require('webpack')
 
+const getEnvVars = prefix => {
+  const envVars = Object.keys(process.env).reduce((filtered, name) => {
+    if (name.startsWith(prefix)) {
+      filtered[`process.env.${name}`] = JSON.stringify(process.env[name])
+    }
+    return filtered
+  }, {})
+
+  if (process.env.NODE_ENV) {
+    envVars['process.env.NODE_ENV'] = JSON.stringify(process.env.NODE_ENV)
+  }
+
+  return envVars
+}
+
+console.info('ENV:', getEnvVars('ETVAS_'))
+
 module.exports = {
   mode: process.env.BUILD_TYPE || 'production',
   entry: {
@@ -31,12 +48,5 @@ module.exports = {
       '@': path.resolve(__dirname, 'src/')
     }
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.ETVAS_BASE_URL': JSON.stringify(process.env.ETVAS_BASE_URL),
-      'process.env.ETVAS_GRAPHQL_URL': JSON.stringify(
-        process.env.ETVAS_GRAPHQL_URL
-      )
-    })
-  ]
+  plugins: [new webpack.DefinePlugin(getEnvVars('ETVAS_'))]
 }

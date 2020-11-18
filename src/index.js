@@ -5,5 +5,6 @@ export {
   initialize,
   showConnect,
   showProductCard,
-  showProductDetails
+  showProductDetails,
+  getProductRecommendation
 } from '@/usecases'

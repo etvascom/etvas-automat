@@ -33,7 +33,10 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.ETVAS_BASE_URL': JSON.stringify(process.env.ETVAS_BASE_URL)
+      'process.env.ETVAS_BASE_URL': JSON.stringify(process.env.ETVAS_BASE_URL),
+      'process.env.ETVAS_GRAPHQL_URL': JSON.stringify(
+        process.env.ETVAS_GRAPHQL_URL
+      )
     })
   ]
 }

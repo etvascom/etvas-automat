@@ -1,4 +1,4 @@
-import { isArray, isObject } from '@lib/isof'
+import { isArray, isObject } from '@/lib/isof'
 
 export const clone = source => {
   if (isArray(source)) {

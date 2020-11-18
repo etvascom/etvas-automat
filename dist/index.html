@@ -3,31 +3,174 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome</title>
-  </head>
-  <body>
-    <div
-      style="
+    <title>Welcome to Etvas Automat</title>
+    <script src="/etvas-automat.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+      .hero {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: space-between;
         align-items: center;
         width: 100vw;
         height: 100vh;
-      "
-    >
-      <h1
-        style="
-          text-align: center;
-          color: #343438;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-            Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        "
-      >
+      }
+      .hero.even {
+        background-color: #fafafa;
+      }
+      .next {
+        text-align: center;
+        display: block;
+        margin-bottom: 2rem;
+        color: blue;
+        font-weight: bold;
+        text-decoration: none;
+      }
+      .next:after {
+        content: 'Scroll down, please';
+      }
+      button.action {
+        border: 1px solid #343430;
+        background-color: #f0f0f0;
+        padding: 6px 12px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      // First thing: initialize the etvas Automat
+      etvasAutomat.initialize({
+        locale: 'en'
+      })
+
+      // some mockup products
+      const productIds = [
+        {
+          productId: '0f0a9141-eca1-4314-8552-f374ff4a8e1f'
+        },
+        {
+          productId: '54327b79-6ed0-461b-b6c3-9c0901d74937'
+        },
+        {
+          productId: '28646d37-7a52-4115-a85c-250f162933ff'
+        },
+        {
+          productId: '54327b79-6ed0-461b-b6c3-9c0901d74937'
+        }
+      ]
+
+      function displayEtvasRandomProductCard(placeholder) {
+        const idx = Math.floor(Math.random() * productIds.length)
+        etvasAutomat.showProductCard(productIds[idx].productId, placeholder)
+      }
+    </script>
+    <div class="hero">
+      <div></div>
+      <h1 style="text-align: center; color: #343438; margin: 0; padding: 0">
         <img
           src="https://admin.helloetvas.com/icons/header-logo.png"
         /><br /><br />
         Welcome to Etvas Automat
       </h1>
+      <div>
+        <a class="next" href="#connect"></a>
+      </div>
+    </div>
+    <div class="hero even">
+      <a name="connect" id="connect"></a>
+      <div>
+        <button class="action" onclick="etvasAutomat.showConnect()">
+          Connect
+        </button>
+      </div>
+      <div>
+        <a class="next" href="#product-card"></a>
+      </div>
+    </div>
+    <div class="hero">
+      <a name="product-card" id="product-card"></a>
+      <div style="text-align: center">
+        <button
+          class="action"
+          onclick="displayEtvasRandomProductCard('product-card-display')"
+        >
+          Display a product card in a div
+        </button>
+        <div id="product-card-display">
+          <div
+            style="
+              min-height: 300px;
+              border: 2px dashed #f0f0f0;
+              padding: 16px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            Placeholder for product card display
+          </div>
+        </div>
+        <small
+          >After the product card is loaded, click on See Product and check your
+          console!</small
+        >
+      </div>
+      <div>
+        <a class="next" href="#product-card-details"></a>
+      </div>
+    </div>
+    <div class="hero even">
+      <div
+        id="full-screen-product"
+        style="
+          display: none;
+          width: 100vw;
+          height: 100vh;
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: 1000;
+        "
+      ></div>
+      <a name="product-card-details" id="product-card-details"></a>
+      <div style="text-align: center">
+        <script>
+          function displayFullScreenDetails() {
+            const idx = Math.floor(Math.random() * productIds.length)
+            const placeholder = document.getElementById('full-screen-product')
+            placeholder.style.display = 'block'
+            document.body.style.overflow = 'hidden'
+            etvasAutomat.showProductDetails(
+              productIds[idx].productId,
+              placeholder
+            )
+            const button = document.createElement('BUTTON')
+            button.innerHTML = '&times; Close details'
+            button.style = 'position:absolute;top:0;right:0;'
+            button.onclick = function () {
+              placeholder.style.display = 'none'
+              document.body.style = undefined
+              placeholder.innerHTML = ''
+            }
+            placeholder.appendChild(button)
+          }
+        </script>
+        <button class="action" onclick="displayFullScreenDetails()">
+          Display product details
+        </button>
+      </div>
+      <div></div>
     </div>
   </body>
 </html>

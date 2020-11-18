@@ -1,8 +1,9 @@
-import { initialize, createModal } from './config'
-import { dom } from '@lib/dom'
+// install the listeners
+import '@/lib/bus'
 
-const display = message => {
-  dom.write(`Message: ${message}`)
-}
-
-export { initialize, display }
+export {
+  initialize,
+  showConnect,
+  showProductCard,
+  showProductDetails
+} from '@/usecases'

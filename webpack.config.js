@@ -23,7 +23,9 @@ module.exports = {
     ]
   },
   devtool:
-    process.env.BUILD_TYPE === 'production' ? 'source-map' : 'eval-source-map',
+    process.env.BUILD_TYPE === 'production'
+      ? 'source-map'
+      : 'inline-source-map',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/')

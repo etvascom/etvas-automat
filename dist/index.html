@@ -51,7 +51,8 @@
     <script>
       // First thing: initialize the etvas Automat
       etvasAutomat.initialize({
-        locale: 'en'
+        locale: 'en',
+        organizationId: '25b9eacb-00ea-49c7-9169-ba423617a8fd'
       })
 
       // some mockup products
@@ -170,7 +171,60 @@
           Display product details
         </button>
       </div>
-      <div></div>
+      <div>
+        <a class="next" href="#display-recommendations"></a>
+      </div>
+    </div>
+    <div class="hero">
+      <a name="display-recommendations" id="display-recommendations"></a>
+      <div>
+        <script>
+          function displayProductRecommendation() {
+            etvasAutomat
+              .getProductRecommendation({
+                type: 'GiroTransaction',
+                id: '26c3642c-e4e2-4668-8678-cf7993a6eab8',
+                transactionPatternId: 'fdc4951a-b7e0-4a22-b560-eab8f668e0f7',
+                amount: {
+                  value: -8900,
+                  currency: 'EUR'
+                },
+                bookingDate: '2020-11-07T12:00:00Z',
+                valueDate: '2020-11-07T12:00:00Z',
+                creditor: 'Apple Ldt.',
+                creditorBankCode: 'DEUTDEDDXXX',
+                creditorAccountNumber: 'DE57300700100394036800',
+                debtor: 'Bogdan Onu',
+                debtorAccountNumber: 'DE00999940000000002518',
+                purpose:
+                  'VK 242067679574 Hausstraße 99 c Musterstadt ABSCHLAG 09 Gas WIR SAGEN D ANKE',
+                cleanPurpose:
+                  'VK 242067679574 Hausstraße 99 c Musterstadt ABSCHLAG 09 Gas WIR SAGEN D ANKE',
+                prebooked: false,
+                bookingKey: 'SDD LASTSCHR',
+                mandateId: '20863HM0534785',
+                endToEndId: 'B511005258924 ',
+                camtTransactionId: 'txId-1295162'
+              })
+              .then(response => {
+                document.getElementById(
+                  'recommend-result'
+                ).innerHTML = JSON.stringify(response, null, 2)
+              })
+              .error(err => {
+                document.getElementById('recommend-result').innerHTML =
+                  err.message
+              })
+          }
+        </script>
+        <button class="action" onclick="displayProductRecommendation()">
+          Get a recommended product ID
+        </button>
+        <pre id="recommend-result"></pre>
+      </div>
+      <div>
+        <a class="next" href="#product-card"></a>
+      </div>
     </div>
   </body>
 </html>

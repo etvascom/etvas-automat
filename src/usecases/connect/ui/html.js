@@ -1,16 +1,15 @@
-import bg from './bg'
-
 export const css = {
   card: `
     padding: 10px;
-    background-image: url(data:image/png;base64,${bg});
+    background-image: url(https://scripts.etvas-automat.com/bg-connect.png);
     background-position: center center;
+    background-repeat: no-repeat;
     width: 400px;
     display: flex;
     flex-direction: column;
     font-size: 15px;
     border-radius: 10px;
-    background-color: red;
+    background-color: #4f000c;
     color: #fff;
     position: fixed;
     left: 50%;
@@ -38,7 +37,7 @@ export const css = {
     text-align: center;
   `,
   button: `width: 100%;
-    border: none;
+    border: 2px solid white;
     color: white;
     padding: 15px 1px;
     text-align: center;
@@ -50,7 +49,7 @@ export const css = {
     transition-duration: 0.4s;
     border-radius: 5px;
     font-weight: bold;
-    background-color: #00c0fc;
+    background-color: transparent;
     margin-bottom: 15px;
   `,
   link: `
@@ -62,7 +61,7 @@ export const css = {
 export const contents = `
 <div style="${css.header}">
   <p>Value Added Services with Etvas</p>
-  <a style="color: white" href="#" class="etvas-connect-close">&times;</a>
+  <a style="color: white;text-decoration:none;" href="#" class="etvas-connect-close">&times;</a>
 </div>
 <div>
   <p style="${css.container}">

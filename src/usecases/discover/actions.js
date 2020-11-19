@@ -7,7 +7,7 @@ const src = `${process.env.ETVAS_BASE_URL}/embed/${config.get(
   'en'
 )}/discover`
 
-const style = 'height: 100%;width: 100%;border:none;visibility:hidden";'
+const style = 'height: 100%;width: 100%;border:none;'
 
 export const open = placeholder => {
   const iframeContainer = dom.createElement('div', { id: 'discover-iframe' })

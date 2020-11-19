@@ -22,7 +22,10 @@ const onMessage = event => {
 
   listeners[action].forEach(handler => {
     try {
-      handler(data.payload)
+      const result = handler(data.payload)
+      if (result === '#nonce') {
+        off(action, handler)
+      }
     } catch (err) {
       if (err.message && err.message.substr(0, 1) !== '#') {
         console.error('* Error while handling bus event', err)

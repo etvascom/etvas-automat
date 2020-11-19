@@ -13,6 +13,13 @@ bus.on('oidc-auth', payload => {
 /**
  * Displays the connect markup with button
  */
-export const showConnect = () => {
+export const showConnect = (callback = null) => {
+  bus.on('oidc-auth', () => {
+    if (callback) {
+      callback()
+    }
+    return '#nonce'
+  })
+
   open()
 }

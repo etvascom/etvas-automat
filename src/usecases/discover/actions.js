@@ -7,25 +7,23 @@ const src = `${process.env.ETVAS_BASE_URL}/embed/${config.get(
   'en'
 )}/discover`
 
-const style = 'height: 100%;width: 100%;border:none;'
-
 export const open = placeholder => {
-  const iframeContainer = dom.createElement('div', { id: 'discover-iframe' })
+  const style = 'height: 100%;width: 100%;border:none;'
+
   const iframe = dom.createElement('iframe', {
+    id: 'discover-iframe',
     style,
-    src,
-    onload: bus.on('resize-embedded-discover', payload => {
-      const iframeContainer = dom.getElement('#discover-iframe')
-
-      if (!payload?.height) {
-        return
-      }
-
-      iframeContainer.style.height = payload.height
-    })
+    src
   })
 
   const container = dom.getElement(placeholder)
-  iframeContainer.appendChild(iframe)
-  container.appendChild(iframeContainer)
+  container.appendChild(iframe)
+
+  bus.on('resize-embedded-discover', payload => {
+    console.log('ok')
+    if (!payload?.height) {
+      return
+    }
+    iframe.style.height = payload.height
+  })
 }

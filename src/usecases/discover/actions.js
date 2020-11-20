@@ -20,7 +20,6 @@ export const open = placeholder => {
   container.appendChild(iframe)
 
   bus.on('resize-embedded-discover', payload => {
-    console.log('ok')
     if (!payload?.height) {
       return
     }

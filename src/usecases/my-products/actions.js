@@ -27,6 +27,16 @@ export const open = (placeholder, options) => {
     })
   }
 
+  if (options?.onDiscover) {
+    bus.on('navigate-to', payload => {
+      const { destination } = payload || {}
+      if (destination === 'discover') {
+        options.onDiscover()
+      }
+      return '#nonce'
+    })
+  }
+
   bus.on('resize-embedded-my-products', payload => {
     if (!payload?.height) {
       return

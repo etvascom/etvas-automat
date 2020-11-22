@@ -14,6 +14,14 @@ const etvasAuth = () => {
   dom.removeElement(`#${ID}`)
 }
 
+const etvasLogout = () => {
+  dom.openWindow(`${config.get('etvasURL')}/oidc-auth?logout=1`, {
+    target: 'etvasAuth',
+    features:
+      'location=no,toolbar=false,resizable=no,scrollbars=false,status=false,width=10,height=10,left:0,top:0'
+  })
+}
+
 const destroy = () => {
   config.clear('__init')
   dom.removeElement(`#${ID}`)
@@ -42,4 +50,11 @@ export const open = () => {
   })
 
   return modal
+}
+
+export const disconnect = () => {
+  if (!config.get('__logged')) {
+    return
+  }
+  etvasLogout()
 }

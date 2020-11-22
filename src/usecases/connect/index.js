@@ -1,4 +1,4 @@
-import { open } from './actions'
+import { open, disconnect } from './actions'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
 
@@ -8,6 +8,12 @@ bus.on('oidc-auth', payload => {
     config.put('refreshToken', payload.result.refreshToken.refreshToken)
     config.put('__logged', true)
   }
+})
+
+bus.on('oidc-unauth', () => {
+  config.clear('accessToken')
+  config.clear('refreshToken')
+  config.clear('__logged')
 })
 
 /**
@@ -22,4 +28,14 @@ export const showConnect = (callback = null) => {
   })
 
   open()
+}
+
+export const logout = (callback = null) => {
+  bus.on('oidc-unauth', () => {
+    if (callback) {
+      callback()
+    }
+    return '#nonce'
+  })
+  disconnect()
 }

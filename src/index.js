@@ -4,6 +4,7 @@ import '@/lib/bus'
 export {
   initialize,
   showConnect,
+  logout,
   showDiscover,
   showSettings,
   showMyProducts,

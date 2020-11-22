@@ -6,7 +6,7 @@ import { css, contents } from './ui/html'
 const ID = 'etvas-modal-connect'
 
 const etvasAuth = () => {
-  dom.openWindow(`${process.env.ETVAS_BASE_URL}/oidc-auth`, {
+  dom.openWindow(`${config.get('etvasURL')}/oidc-auth`, {
     target: 'etvasAuth',
     features:
       'location=no,toolbar=false,resizable=no,scrollbars=false,status=false,width=10,height=10,left:0,top:0'

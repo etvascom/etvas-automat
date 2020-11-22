@@ -3,7 +3,7 @@ import { bus } from '@/lib/bus'
 import { config } from '@/config'
 
 const src = (productId, queryString = null) =>
-  `${process.env.ETVAS_BASE_URL}/embed/${config.get(
+  `${config.get('etvasURL')}/embed/${config.get(
     'locale',
     'en'
   )}/product/${productId}${
@@ -14,8 +14,7 @@ const src = (productId, queryString = null) =>
       : ''
   }`
 
-const style =
-  'border:none;width:480px;height:240px;display:block;margin:10px auto;'
+const style = 'border:none;width:480px;height:240px;display:block;'
 
 export const open = (
   productId,

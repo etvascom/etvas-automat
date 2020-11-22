@@ -6,7 +6,9 @@ export const open = (productId, placeholder) => {
 
   const iframe = dom.createElement('iframe', {
     style: 'height: 100%;width: 100%;border:none;',
-    src: `${process.env.ETVAS_BASE_URL}/embed/${locale}/product/${productId}/details`
+    src: `${config.get(
+      'etvasURL'
+    )}/embed/${locale}/product/${productId}/details`
   })
 
   const container = dom.getElement(placeholder)

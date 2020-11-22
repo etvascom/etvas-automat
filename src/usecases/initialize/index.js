@@ -6,6 +6,16 @@ export const initialize = function (options = {}) {
     return true
   }
 
+  if (!options?.etvasURL) {
+    alert('Incorrect Etvas initialization, must specify etvasURL')
+    throw new Error('You must specify Etvas URL!')
+  }
+
+  if (!options?.organizationId) {
+    alert('Incorrect Etvas initialization, must specify organizationId')
+    throw new Error('You must specify Organization ID!')
+  }
+
   config.seed({
     ...defaults,
     ...options,

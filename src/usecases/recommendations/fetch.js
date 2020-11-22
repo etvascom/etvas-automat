@@ -50,7 +50,12 @@ export const fetch = async (
     const variables = {
       input: { provider, amount, currency, purpose, description }
     }
+
     const response = await etvasQuery(QUERY_NAME, query, variables)
+
+    if (!response?.data?.[QUERY_NAME]) {
+      return null
+    }
 
     if (options?.minConfidence) {
       if (response.data[QUERY_NAME].confidence < options.minConfidence) {

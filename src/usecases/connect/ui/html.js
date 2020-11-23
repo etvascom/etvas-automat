@@ -1,3 +1,5 @@
+import { title, text, button, abort, fallbackLanguage } from './i18n'
+
 export const css = {
   card: `
     padding: 10px;
@@ -58,23 +60,20 @@ export const css = {
   `
 }
 
-export const contents = `
-<div style="${css.header}">
-  <p>Value Added Services with Etvas</p>
+export const contents = lang => `<div style="${css.header}">
+  <p>${title[lang] || title[fallbackLanguage]}</p>
   <a style="color: white;text-decoration:none;" href="#" class="etvas-connect-close">&times;</a>
 </div>
 <div>
-  <p style="${css.container}">
-    We work with Etvas to deliver relevant and personalized value added
-    services to you. In order to deliver this service Etvas needs access
-    to some of your personal information such as transaction and account
-    data. Sharing this information does not allow Etvas to perform
-    transactions on your account or on your behalf.
-  </p>
+  <p style="${css.container}">${text[lang] || text[fallbackLanguage]}</p>
 </div>
 
 <div style="${css.actions}">
-  <button style="${css.button}" id="etvas-connect">CONNECT</button>
-  <a href="#" style="${css.link}" class="etvas-connect-close">No, thanks!</a>
+  <button style="${css.button}" id="etvas-connect">${
+  button[lang] || button[fallbackLanguage]
+}</button>
+  <a href="#" style="${css.link}" class="etvas-connect-close">${
+  abort[lang] || abort[fallbackLanguage]
+}</a>
 </div>
 `

@@ -34,7 +34,7 @@ export const open = () => {
   const modal = dom.createElement('div', {
     id: ID,
     style: css.card,
-    innerHTML: contents
+    innerHTML: contents(config.get('locale'))
   })
 
   dom.appendChild(modal)

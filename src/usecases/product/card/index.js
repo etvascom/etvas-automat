@@ -30,7 +30,7 @@ export const open = (
     console.error('Cannot find DOM node', element)
     return
   }
-  const id = `product-${productId}-${Math.floor(1000000 * Math.random())}`
+  const id = `product-card-${productId}-iframe`
   const iframe = dom.createElement('iframe', { id, src: src(productId), style })
   const placeholder = dom.createElement('div', { innerHTML: '' })
   placeholder.appendChild(iframe)

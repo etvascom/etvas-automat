@@ -36,11 +36,4 @@ export const open = (placeholder, options) => {
       return '#nonce'
     })
   }
-
-  bus.on('resize-embedded-my-products', payload => {
-    if (!payload?.height) {
-      return
-    }
-    iframe.style.height = payload.height
-  })
 }

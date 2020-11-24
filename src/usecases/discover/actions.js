@@ -26,12 +26,4 @@ export const open = (placeholder, options) => {
       options.onClick(payload)
     })
   }
-
-  bus.on('resize-embedded-discover', payload => {
-    if (!payload?.height) {
-      return
-    }
-    console.info('payload height', payload)
-    iframe.style.height = payload.height
-  })
 }

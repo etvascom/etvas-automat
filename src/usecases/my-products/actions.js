@@ -5,33 +5,37 @@ import { bus } from '@/lib/bus'
 const getSrc = () =>
   `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/my-products`
 
-export const open = (placeholder, options) => {
+const createIframe = () => {
   const style = 'height: 100%;width: 100%;border:none;'
-
-  const iframe = dom.createElement('iframe', {
+  return dom.createElement('iframe', {
     id: 'my-products-iframe',
     style,
     src: getSrc()
   })
+}
+
+export const open = (placeholder, options) => {
+  const { productCard, onDiscoverClick } = options
 
   const container = dom.getElement(placeholder)
+  const iframe = createIframe()
   container.appendChild(iframe)
 
-  if (options?.onClick) {
+  if (productCard?.onDetailsClick) {
     bus.on('open-product-details', payload => {
       const exists = dom.getElement('#my-products-iframe')
       if (!exists) {
         throw new Error('# Discover no longer in DOM')
       }
-      options.onClick(payload)
+      productCard.onDetailsClick(payload)
     })
   }
 
-  if (options?.onDiscover) {
+  if (onDiscoverClick) {
     bus.on('navigate-to', payload => {
       const { destination } = payload || {}
       if (destination === 'discover') {
-        options.onDiscover()
+        onDiscoverClick()
       }
       return '#nonce'
     })

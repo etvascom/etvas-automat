@@ -1,7 +1,9 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
 
-export const open = (productId, placeholder) => {
+export const open = (placeholder, options) => {
+  const { productId } = options
+
   const locale = config.get('locale', 'en')
 
   const iframe = dom.createElement('iframe', {

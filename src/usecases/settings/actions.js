@@ -8,7 +8,7 @@ export const open = placeholder => {
   const style = 'height: 100%;width: 100%;border:none;'
 
   const iframe = dom.createElement('iframe', {
-    id: 'settings-iframe',
+    id: 'etvas-settings-iframe',
     style,
     src: getSrc()
   })

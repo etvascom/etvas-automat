@@ -1,12 +1,13 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
+import { bus } from '@/lib/bus'
 
-export const open = (productId, placeholder) => {
+export const open = (productId, placeholder, options) => {
   const locale = config.get('locale', 'en')
 
   const iframe = dom.createElement('iframe', {
     style: 'height: 100%;width: 100%;border:none;',
-    id: `product-details-${productId}-iframe`,
+    id: `etvas-product-details-${productId}-iframe`,
     src: `${config.get(
       'etvasURL'
     )}/embed/${locale}/product/${productId}/details`
@@ -14,4 +15,12 @@ export const open = (productId, placeholder) => {
 
   const container = dom.getElement(placeholder)
   container.appendChild(iframe)
+
+  if (options?.onUse) {
+    bus.on('open-product-use', payload => {
+      if (payload?.productId === productId) {
+        options.onUse(payload)
+      }
+    })
+  }
 }

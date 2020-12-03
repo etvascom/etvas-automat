@@ -9,7 +9,7 @@ export const open = (placeholder, options) => {
   const style = 'height: 100%;width: 100%;border:none;'
 
   const iframe = dom.createElement('iframe', {
-    id: 'my-products-iframe',
+    id: 'etvas-my-products-iframe',
     style,
     src: getSrc()
   })
@@ -19,11 +19,17 @@ export const open = (placeholder, options) => {
 
   if (options?.onClick) {
     bus.on('open-product-details', payload => {
-      const exists = dom.getElement('#my-products-iframe')
+      const exists = dom.getElement('#etvas-my-products-iframe')
       if (!exists) {
         throw new Error('# Discover no longer in DOM')
       }
       options.onClick(payload)
+    })
+  }
+
+  if (options?.onUse) {
+    bus.on('open-product-use', payload => {
+      options.onUse(payload)
     })
   }
 

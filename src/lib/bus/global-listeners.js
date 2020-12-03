@@ -3,7 +3,7 @@ import { bus } from './bus'
 
 bus.on('etvas-resize', payload => {
   if (payload?.height !== undefined && payload?.name !== undefined) {
-    const targetIframe = dom.getElement(`${payload.name}-iframe`)
+    const targetIframe = dom.getElement(`etvas-${payload.name}-iframe`)
     if (!targetIframe) {
       return
     }

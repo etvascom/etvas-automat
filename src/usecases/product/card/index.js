@@ -18,23 +18,23 @@ const style = 'border:none;width:480px;height:240px;display:block;'
 
 export const open = (
   productId,
-  element,
+  placeholder,
   options = {
     onClick: payload => {
       console.log('Product card clicked. Received:', payload)
     }
   }
 ) => {
-  const el = dom.getElement(element)
+  const el = dom.getElement(placeholder)
   if (!el) {
-    console.error('Cannot find DOM node', element)
+    console.error('Cannot find DOM node', placeholder)
     return
   }
-  const id = `product-card-${productId}-iframe`
+  const id = `etvas-product-card-${productId}-iframe`
   const iframe = dom.createElement('iframe', { id, src: src(productId), style })
-  const placeholder = dom.createElement('div', { innerHTML: '' })
-  placeholder.appendChild(iframe)
-  el.innerHTML = placeholder.innerHTML
+  const wrapper = dom.createElement('div', { innerHTML: '' })
+  wrapper.appendChild(iframe)
+  el.innerHTML = wrapper.innerHTML
 
   if (options?.onClick) {
     bus.on('open-product-details', payload => {
@@ -44,6 +44,14 @@ export const open = (
       }
       if (payload?.productId === productId) {
         options.onClick(payload)
+      }
+    })
+  }
+
+  if (options?.onUse) {
+    bus.on('open-product-use', payload => {
+      if (payload?.productId === productId) {
+        options.onUse(payload)
       }
     })
   }

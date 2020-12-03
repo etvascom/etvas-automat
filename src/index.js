@@ -10,5 +10,6 @@ export {
   showMyProducts,
   showProductCard,
   showProductDetails,
+  showProductUse,
   getProductRecommendation
 } from '@/usecases'

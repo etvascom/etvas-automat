@@ -1,52 +1,54 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
-import { showPurchase } from '../purchase'
 
 const getSrc = () =>
   `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/my-products`
 
-export const open = (placeholder, options) => {
+const createIframe = () => {
   const style = 'height: 100%;width: 100%;border:none;'
 
-  const iframe = dom.createElement('iframe', {
+  return dom.createElement('iframe', {
     id: 'etvas-my-products-iframe',
     style,
     src: getSrc()
   })
+}
 
+export const open = (placeholder, options) => {
   const container = dom.getElement(placeholder)
+  const iframe = createIframe()
   container.appendChild(iframe)
 
-  if (options?.onClick) {
+  if (options?.productCard?.onDetailsClick) {
     bus.on('open-product-details', payload => {
       const exists = dom.getElement('#etvas-my-products-iframe')
       if (!exists) {
         throw new Error('# Discover no longer in DOM')
       }
-      options.onClick(payload)
+      options.productCard.onDetailsClick(payload)
     })
   }
 
-  if (options?.onUse) {
-    bus.on('open-product-use', payload => {
-      options.onUse(payload)
-    })
-  }
-
-  if (options?.onDiscover) {
+  if (options?.onDiscoverClick) {
     bus.on('navigate-to', payload => {
       const { destination } = payload || {}
       if (destination === 'discover') {
-        options.onDiscover()
+        options.onDiscoverClick()
       }
       return '#nonce'
     })
   }
 
-  if (options?.onPurchase) {
+  if (options?.actionButton?.onPurchase) {
     bus.on('on-product-purchase', payload => {
-      options.onPurchase(payload)
+      options.actionButton.onPurchase(payload)
+    })
+  }
+
+  if (options?.actionButton?.onUse) {
+    bus.on('open-product-use', payload => {
+      options.actionButton.onUse(payload)
     })
   }
 }

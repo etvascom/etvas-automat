@@ -20,7 +20,7 @@ export const open = (
   productId,
   placeholder,
   options = {
-    onClick: payload => {
+    onDetailsClick: payload => {
       console.log('Product card clicked. Received:', payload)
     }
   }
@@ -36,14 +36,14 @@ export const open = (
   wrapper.appendChild(iframe)
   el.innerHTML = wrapper.innerHTML
 
-  if (options?.onClick) {
+  if (options?.onDetailsClick) {
     bus.on('open-product-details', payload => {
       const exists = dom.getElement(`#${id}`)
       if (!exists) {
         throw new Error('# Product card no longer in DOM')
       }
       if (payload?.productId === productId) {
-        options.onClick(payload)
+        options.onDetailsClick(payload)
       }
     })
   }

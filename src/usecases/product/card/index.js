@@ -25,7 +25,6 @@ export const open = (
     }
   }
 ) => {
-  const { onDetailsClick } = options
   const el = dom.getElement(placeholder)
   if (!el) {
     console.error('Cannot find DOM node', placeholder)
@@ -37,14 +36,14 @@ export const open = (
   wrapper.appendChild(iframe)
   el.innerHTML = wrapper.innerHTML
 
-  if (onDetailsClick) {
+  if (options?.onDetailsClick) {
     bus.on('open-product-details', payload => {
       const exists = dom.getElement(`#${id}`)
       if (!exists) {
         throw new Error('# Product card no longer in DOM')
       }
       if (payload?.productId === productId) {
-        onDetailsClick(payload)
+        options.onDetailsClick(payload)
       }
     })
   }

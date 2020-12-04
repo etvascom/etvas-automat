@@ -16,41 +16,39 @@ const createIframe = () => {
 }
 
 export const open = (placeholder, options) => {
-  const { productCard, onDiscoverClick, actionButton } = options
-
   const container = dom.getElement(placeholder)
   const iframe = createIframe()
   container.appendChild(iframe)
 
-  if (productCard?.onDetailsClick) {
+  if (options?.productCard?.onDetailsClick) {
     bus.on('open-product-details', payload => {
       const exists = dom.getElement('#etvas-my-products-iframe')
       if (!exists) {
         throw new Error('# Discover no longer in DOM')
       }
-      productCard.onDetailsClick(payload)
+      options.productCard.onDetailsClick(payload)
     })
   }
 
-  if (onDiscoverClick) {
+  if (options?.onDiscoverClick) {
     bus.on('navigate-to', payload => {
       const { destination } = payload || {}
       if (destination === 'discover') {
-        onDiscoverClick()
+        options.onDiscoverClick()
       }
       return '#nonce'
     })
   }
 
-  if (actionButton?.onPurchase) {
+  if (options?.actionButton?.onPurchase) {
     bus.on('on-product-purchase', payload => {
-      actionButton.onPurchase(payload)
+      options.actionButton.onPurchase(payload)
     })
   }
 
-  if (actionButton?.onUse) {
+  if (options?.actionButton?.onUse) {
     bus.on('open-product-use', payload => {
-      actionButton.onUse(payload)
+      options.actionButton.onUse(payload)
     })
   }
 }

@@ -1,6 +1,7 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
+import { showPurchase } from '../purchase'
 
 const getSrc = () =>
   `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/my-products`
@@ -40,6 +41,12 @@ export const open = (placeholder, options) => {
         options.onDiscover()
       }
       return '#nonce'
+    })
+  }
+
+  if (options?.onPurchase) {
+    bus.on('on-product-purchase', payload => {
+      options.onPurchase(payload)
     })
   }
 }

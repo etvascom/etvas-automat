@@ -3,6 +3,11 @@ import { config } from '@/config'
 import { bus } from '@/lib/bus'
 
 export const open = (productId, placeholder, options) => {
+  if (!productId) {
+    console.error('You must provide a product id in options')
+    return
+  }
+
   const locale = config.get('locale', 'en')
 
   const iframe = dom.createElement('iframe', {

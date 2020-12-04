@@ -14,7 +14,7 @@ const onMessage = event => {
     return
   }
 
-  const { action } = data
+  const { action} = data
 
   if (!listeners[action]) {
     return

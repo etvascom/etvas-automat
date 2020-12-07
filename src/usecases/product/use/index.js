@@ -1,7 +1,7 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
 
-export const open = (productId, placeholder) => {
+export const open = (productId, placeholder, options) => {
   const locale = config.get('locale', 'en')
 
   const iframe = dom.createElement('iframe', {
@@ -11,5 +11,8 @@ export const open = (productId, placeholder) => {
   })
 
   const container = dom.getElement(placeholder)
+  if (!options?.append) {
+    dom.clearElement(container)
+  }
   container.appendChild(iframe)
 }

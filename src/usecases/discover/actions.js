@@ -18,6 +18,11 @@ const createIframe = () => {
 export const open = (placeholder, options) => {
   const iframe = createIframe()
   const container = dom.getElement(placeholder)
+
+  if (!options?.append) {
+    dom.clearElement(container)
+  }
+
   container.appendChild(iframe)
 
   if (options?.productCard?.onDetailsClick) {

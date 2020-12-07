@@ -19,6 +19,11 @@ export const open = (productId, placeholder, options) => {
   })
 
   const container = dom.getElement(placeholder)
+
+  if (!options?.append) {
+    dom.clearElement(container)
+  }
+
   container.appendChild(iframe)
 
   if (options?.actionButton?.onUse) {

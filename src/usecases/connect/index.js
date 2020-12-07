@@ -1,4 +1,4 @@
-import { openConnect, disconnect } from './actions'
+import { etvasAuth, disconnect } from './actions'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
 
@@ -27,7 +27,7 @@ export const connect = (callback = null) => {
     return '#nonce'
   })
 
-  openConnect()
+  etvasAuth()
 }
 
 export const logout = (callback = null) => {

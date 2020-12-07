@@ -1,7 +1,7 @@
 import { config } from '@/config'
 import { dom } from '@/lib/dom'
 
-export const openConnect = () => {
+export const etvasAuth = () => {
   dom.openWindow(`${config.get('etvasURL')}/oidc-auth`, {
     target: 'etvasAuth',
     features:

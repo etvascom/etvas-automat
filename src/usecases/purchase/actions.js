@@ -17,5 +17,8 @@ export const open = (placeholder, options) => {
   })
 
   const container = dom.getElement(placeholder)
+  if (!options?.append) {
+    dom.clearElement(container)
+  }
   container.appendChild(iframe)
 }

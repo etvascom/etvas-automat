@@ -31,6 +31,11 @@ const appendChild = node => {
   document.body.appendChild(node)
 }
 
+const clearElement = element => {
+  element.innerHTML = ''
+  return element
+}
+
 const removeElement = element => {
   if (typeof element === 'string' && element.substr(0, 1) === '#') {
     const el = document.getElementById(element.substr(1))
@@ -99,5 +104,6 @@ export const dom = {
   appendChild,
   removeElement,
   openWindow,
-  listen
+  listen,
+  clearElement
 }

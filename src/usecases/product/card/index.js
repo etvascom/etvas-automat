@@ -30,6 +30,9 @@ export const open = (
     console.error('Cannot find DOM node', placeholder)
     return
   }
+  if (!options?.append) {
+    dom.clearElement(el)
+  }
   const id = `etvas-product-card-${productId}-iframe`
   const iframe = dom.createElement('iframe', { id, src: src(productId), style })
   const wrapper = dom.createElement('div', { innerHTML: '' })

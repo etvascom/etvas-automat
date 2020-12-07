@@ -3,7 +3,7 @@ import '@/lib/bus'
 
 export {
   initialize,
-  showConnect,
+  connect,
   logout,
   showDiscover,
   showSettings,

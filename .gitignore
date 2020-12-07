@@ -3,3 +3,5 @@ node_modules
 dist/**/etvas*.js
 dist/**/etvas*.js.map
 
+.env.local
+.env.*.local

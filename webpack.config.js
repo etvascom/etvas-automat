@@ -16,16 +16,17 @@ const getEnvVars = prefix => {
   return envVars
 }
 
-console.info('ENV:', getEnvVars('ETVAS_'))
-
 module.exports = {
-  mode: process.env.BUILD_TYPE || 'production',
+  mode: process.env.NODE_ENV || 'production',
   entry: {
     main: './src/index.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'etvas-automat.js',
+    filename:
+      process.env.NODE_ENV === 'development'
+        ? 'etvas-automat.js'
+        : 'etvas-automat.min.js',
     libraryTarget: 'umd',
     library: 'etvasAutomat',
     globalObject: 'this'
@@ -39,10 +40,7 @@ module.exports = {
       }
     ]
   },
-  devtool:
-    process.env.BUILD_TYPE === 'production'
-      ? 'source-map'
-      : 'inline-source-map',
+  devtool: 'source-map',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/')

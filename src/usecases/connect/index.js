@@ -1,4 +1,4 @@
-import { open, disconnect } from './actions'
+import { openConnect, disconnect } from './actions'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
 
@@ -19,7 +19,7 @@ bus.on('oidc-unauth', () => {
 /**
  * Displays the connect markup with button
  */
-export const showConnect = (callback = null) => {
+export const connect = (callback = null) => {
   bus.on('oidc-auth', () => {
     if (callback) {
       callback()
@@ -27,7 +27,7 @@ export const showConnect = (callback = null) => {
     return '#nonce'
   })
 
-  open()
+  openConnect()
 }
 
 export const logout = (callback = null) => {

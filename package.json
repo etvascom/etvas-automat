@@ -1,6 +1,6 @@
 {
   "name": "@etvas/etvas-automat",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Etvas injector",
   "main": "dist/etvas-automat.min.js",
   "homepage": "https://github.com/etvascom/etvas-automat",
@@ -20,7 +20,7 @@
   "scripts": {
     "build": "env-cmd -e production webpack",
     "build:local": "env-cmd -f .env.development.local webpack",
-    "deploy": "npm run build && npm publish --access public",
+    "deploy": "npm install && npm run build && npm publish --access public",
     "lint": "eslint src/**/*.js",
     "serve": "node dev-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"

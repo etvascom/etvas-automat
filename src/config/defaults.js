@@ -1,3 +1,4 @@
 export const defaults = {
-  locale: 'en'
+  locale: process.env.DEFAULT_LOCALE || 'en',
+  etvasGraphQLUrl: process.env.ETVAS_GRAPHQL_URL
 }

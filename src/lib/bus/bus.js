@@ -14,7 +14,7 @@ const onMessage = event => {
     return
   }
 
-  const { action} = data
+  const { action } = data
 
   if (!listeners[action]) {
     return
@@ -70,7 +70,7 @@ const off = (action, handler) => {
 }
 
 const fire = (action, payload) => {
-  dom.window.postMessage({ channel: 'etvas-channel', action, payload })
+  dom.window.postMessage({ channel: 'etvas-channel', action, payload }, '*')
 }
 
 // Install global listener

@@ -36,7 +36,8 @@ export const open = (productId, placeholder, options) => {
 
   if (options?.actionButton?.onPurchase) {
     bus.on('on-product-purchase', payload => {
-      options.actionButton.onPurchase(payload)
+      const oidc = config.get('oidc')
+      options.actionButton.onPurchase({ oidc, ...payload })
     })
   }
 }

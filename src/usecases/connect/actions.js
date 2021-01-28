@@ -11,7 +11,7 @@ const _getProvider = () => {
 export const etvasAuth = () => {
   const provider = _getProvider()
   const query = provider
-    ? `?identity-provider=${encodeURIComponent(provider)}`
+    ? `?identity_provider=${encodeURIComponent(provider)}`
     : ''
   dom.openWindow(`${config.get('etvasURL')}/oidc-auth${query}`, {
     target: 'etvasAuth',

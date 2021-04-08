@@ -12,5 +12,6 @@ export {
   showProductCard,
   showProductDetails,
   showProductUse,
-  getProductRecommendation
+  getProductRecommendation,
+  showBundledUse
 } from '@/usecases'

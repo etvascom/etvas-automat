@@ -1,11 +1,34 @@
 import { dom } from '@/lib/dom'
+import { encode } from '@/lib/hash'
 
 const listeners = {}
 
 // Each event must have a data member with the following structure:
 // { channel: 'etvas-channel', action: 'the-action-name', payload: 'anything' }
 const onMessage = event => {
-  const { data } = event
+  const { origin, data } = event
+
+  // Forward etvas-kit message
+  if (
+    data?.event === 'response.size' &&
+    data?.namespace === 'etvas.embededApp' &&
+    data?.payload?.height !== undefined
+  ) {
+    const name = `embeddedApp-${encode(origin)}`
+    dom.window.postMessage(
+      {
+        channel: 'etvas-channel',
+        action: 'etvas-resize',
+        payload: {
+          height: data.payload.height,
+          width: data.payload.width,
+          name
+        }
+      },
+      '*'
+    )
+  }
+
   if (data?.channel !== 'etvas-channel') {
     return
   }

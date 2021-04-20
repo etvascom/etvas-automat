@@ -12,10 +12,10 @@
     "dist/etvas-automat.min.js",
     "dist/etvas-automat.min.js.map"
   ],
-  "bugs": "https://github.com/etvascom/etvas-kit/issues",
+  "bugs": "https://github.com/etvascom/etvas-automat/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/etvascom/etvas-kit.git"
+    "url": "https://github.com/etvascom/etvas-automat.git"
   },
   "scripts": {
     "build": "env-cmd -e production webpack",

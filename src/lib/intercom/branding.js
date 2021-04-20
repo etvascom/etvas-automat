@@ -1,8 +1,8 @@
 import { config } from '@/config'
 import { dom } from '@/lib/dom'
-import { encode } from '@/lib/hash'
 
 import { fetchBranding } from './fetchBranding'
+import { getIframeIdByOrigin } from './utils'
 
 const canHandle = event =>
   event?.data?.event === 'request.cssVars' && event?.data?.namespace === 'etvas'
@@ -14,7 +14,7 @@ const handle = async event => {
   }
 
   const { origin } = event
-  const iframeId = `#etvas-embeddedApp-${encode(origin)}-iframe`
+  const iframeId = getIframeIdByOrigin(origin, false)
   const iframe = dom.getElement(iframeId)
   if (!iframe) {
     console.error('Could not find iframe ', iframeId)

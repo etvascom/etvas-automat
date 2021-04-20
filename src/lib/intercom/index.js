@@ -1,18 +1,16 @@
 import { resize } from './resize'
 import { branding } from './branding'
+import { i18n } from './i18n'
+
+const handlers = [resize, branding, i18n]
 
 const process = event => {
-  if (resize.canHandle(event)) {
-    resize.handle(event)
-    return true
+  const handler = handlers.find(handler => handler.canHandle(event))
+  if (!handler) {
+    return false
   }
-
-  if (branding.canHandle(event)) {
-    branding.handle(event)
-    return true
-  }
-
-  return false
+  handler.handle(event)
+  return true
 }
 
 export default {

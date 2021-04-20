@@ -1,5 +1,5 @@
 import { dom } from '@/lib/dom'
-import { encode } from '@/lib/hash'
+import { getIframeIdByOrigin } from './utils'
 
 const canHandle = event =>
   event?.data?.namespace === 'etvas.embededApp' &&
@@ -7,7 +7,7 @@ const canHandle = event =>
   event?.data?.payload?.height !== undefined
 
 const handle = ({ origin, data }) => {
-  const name = `embeddedApp-${encode(origin)}`
+  const name = getIframeIdByOrigin(origin, true)
   dom.window.postMessage(
     {
       channel: 'etvas-channel',

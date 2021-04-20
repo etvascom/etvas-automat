@@ -1,33 +1,15 @@
 import { dom } from '@/lib/dom'
-import { encode } from '@/lib/hash'
+import intercom from '@/lib/intercom'
 
 const listeners = {}
 
 // Each event must have a data member with the following structure:
 // { channel: 'etvas-channel', action: 'the-action-name', payload: 'anything' }
 const onMessage = event => {
-  const { origin, data } = event
+  const { data } = event
 
-  // Forward etvas-kit message
-  if (
-    data?.event === 'response.size' &&
-    data?.namespace === 'etvas.embededApp' &&
-    data?.payload?.height !== undefined
-  ) {
-    const name = `embeddedApp-${encode(origin)}`
-    dom.window.postMessage(
-      {
-        channel: 'etvas-channel',
-        action: 'etvas-resize',
-        payload: {
-          height: data.payload.height,
-          width: data.payload.width,
-          name
-        }
-      },
-      '*'
-    )
-  }
+  // intercept EtvasKit Intercom messages
+  intercom.process(event)
 
   if (data?.channel !== 'etvas-channel') {
     return

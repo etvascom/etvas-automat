@@ -12,7 +12,8 @@ const getHeaders = () => [
     value: config.get('organizationId')
   },
   { name: 'Authorization', value: config.get('accessToken') },
-  { name: 'x-amz-user-agent', value: 'aws-amplify/2.0.2' }
+  { name: 'x-amz-user-agent', value: 'aws-amplify/2.0.2' },
+  { name: 'x-api-key', value: config.get('etvasApiKey') }
 ]
 
 const initializeAxios = () => {
@@ -26,7 +27,9 @@ const initializeAxios = () => {
   _instance.interceptors.request.use(cfg => {
     const additionalHeaders = getHeaders()
     additionalHeaders.forEach(({ name, value }) => {
-      cfg.headers[name] = value
+      if (value !== undefined) {
+        cfg.headers[name] = value
+      }
     })
     return cfg
   }, Promise.reject)

@@ -8,7 +8,7 @@ We designed the Etvas Automat using a Block Strategy. Every piece of information
 
 **Note:** the `iframe` elements rendered by various function in the Etvas Automat have an automatic resize mechanism (implemented through `window.postMessage`) that conveniently resizes the iframe so the dreaded double-scroll does not appear in your page. You should still take this into account and permit the HTML element you are using as a container to occupy as much height as needed.
 
-Looking for quick examples? Check the [example section](URL 'Code example')
+Looking for quick examples? Check the [example section](#code-example)
 
 ## Authentication and Security
 
@@ -51,7 +51,7 @@ If you need a specific version of Etvas Automat (and you most likely will), you 
 
 You can read more about resolving a version (major, minor and so on) by consulting the documentation at [unpkg.com](https://unpkg.com).
 
-In order to use Etvas Automat features, you need to initialize it. You can find the code fragment in your account on [Partners Portal](https://partners.helloetvas.com), which you must copy and paste in your HTML.
+In order to use Etvas Automat features, you need to initialize it. You can find the code fragment in your account on [Partners Studio](https://partners.helloetvas.com), which you must copy and paste in your HTML.
 
 #### 2. When using a package manager
 
@@ -89,18 +89,18 @@ The library needs some configuration in order to work and communicate properly w
 
 ```
 automat.initialize({
-  etvasURL: "https://appname.etvasapps.com",
+  etvasURL: "https://unique-organization-slug.helloetvas.com",
   etvasApiKey: "kn0-providedapikeystring",
   organizationId: "12345678-1234-1234-4123-123456789012",
   locale: "en"
 })
 ```
 
-Only the `etvasURL` and the `organizationId` are required. The other ones have either a default value or they are needed just in some cases. Aside the `locale` entry, everything else is provided by Etvas Support Team or you can find the values in [Etvas Partners Portal](https://partners.helloetvas.com)
+Only the `etvasURL` and the `organizationId` are required. The other ones have either a default value or they are needed just in some cases. Aside the `locale` entry, everything else is provided by Etvas Support Team or you can find the values in [Etvas Partners Studio](https://partners.helloetvas.com)
 
 #### `etvasURL`
 
-This is the URL you can find in your account on [Etvas Partner's Studio](https://partners.helloetvas.com). We call this URL the Customer Portal, the portal tailored and branded by you to show it to your customers. It is required in order to preserve the brand colors and graphics you provided, so the integration in your application is as natural as possible.
+This is the URL you can find in your account on [Etvas Partners Studio](https://partners.helloetvas.com). We call this URL the Customer Portal, the portal tailored and branded by you to show it to your customers. It is required in order to preserve the brand colors and graphics you provided, so the integration in your application is as natural as possible.
 
 #### `etvasApiKey`
 
@@ -229,7 +229,7 @@ The function signature is:
 automat.showProductCard(productId, container, options)
 ```
 
-where the `productId` is an UID of a product obtained from your account on Partner's Studio, a result of a recommendation or a specific product ID provided by Etvas, on request; the `container` can be an [HTML Node element, an ID or a class name](URL 'Some quick notes about the examples'); the `options` is an object containing how to treat the existing container contents (append or clear) and a function called when the user clicks the link inside the product card.
+where the `productId` is an UID of a product obtained from your account on Partner's Studio, a result of a recommendation or a specific product ID provided by Etvas, on request; the `container` can be an [HTML Node element, an ID or a class name](#some-quick-notes-about-the-examples); the `options` is an object containing how to treat the existing container contents (append or clear) and a function called when the user clicks the link inside the product card.
 
 Please **note** the product card is a small iframe and will not take a full width container. You can, of course, control how much space will take horizontally, but we recommend an optimal size of 480&times;240 pixels.
 
@@ -257,7 +257,7 @@ The signature is similar with the method for showing the product card:
 automat.showProductDetails(productId, container, options)
 ```
 
-where the `productId` is an UID of a product obtained from your account on Partner's Studio, a result of a recommendation or a specific product ID provided by Etvas, on request; the `container` can be an [HTML Node element, an ID or a class name](URL 'Some quick notes about the examples').
+where the `productId` is an UID of a product obtained from your account on Partner's Studio, a result of a recommendation or a specific product ID provided by Etvas, on request; the `container` can be an [HTML Node element, an ID or a class name](#some-quick-notes-about-the-examples).
 
 The `options` object is more complex than the one provided for product card. It has the usual `append` key, but the similarity ends here. This happens because the product details page will behave differently if the user is authenticated (the `connect` process took place) and the product is purchased by the current authenticated user:
 
@@ -304,7 +304,7 @@ The signature is:
 automat.showDiscover(container, options)
 ```
 
-where the `container` can be an [HTML Node element, an ID or a class name](URL 'Some quick notes about the examples') and the `options` is an object resembling a combination between the [product card](URL: 'Display a product card') and the one from [product details](URL 'Display a product details page').
+where the `container` can be an [HTML Node element, an ID or a class name](#some-quick-notes-about-the-examples) and the `options` is an object resembling a combination between the [product card](#display-a-product-card) and the one from [product details](#display-a-product-details-page).
 
 In a similar process with the prior example, the actions on Discover page buttons and links (from the product cards displayed) will behave differently if the user is authenticated (the `connect` process took place) and the product is purchased by the current authenticated user:
 

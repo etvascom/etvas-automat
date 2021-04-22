@@ -90,7 +90,6 @@ The library needs some configuration in order to work and communicate properly w
 ```
 automat.initialize({
   etvasURL: "https://unique-organization-slug.helloetvas.com",
-  etvasApiKey: "kn0-providedapikeystring",
   organizationId: "12345678-1234-1234-4123-123456789012",
   locale: "en"
 })
@@ -101,10 +100,6 @@ Only the `etvasURL` and the `organizationId` are required. The other ones have e
 #### `etvasURL`
 
 This is the URL you can find in your account on [Etvas Partners Studio](https://partners.helloetvas.com). We call this URL the Customer Portal, the portal tailored and branded by you to show it to your customers. It is required in order to preserve the brand colors and graphics you provided, so the integration in your application is as natural as possible.
-
-#### `etvasApiKey`
-
-This is a public key we provide (and you can find it in your account in [Etvas Partner's Studio](https://partners.helloetvas.com)) which is used not only to uniquely identify your app (the public part) but also to watch, analyze and shape the incoming traffic to automatically protect against a wide range of network attacks. Please note the entire process is anonymous and no personal data is stored by these operations.
 
 #### `organizationId`
 

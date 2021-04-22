@@ -122,6 +122,43 @@ There are a number of different sections that you can display with Etvas Automat
 
 We will describe the authentication mechanism first and, for each building block, we will note if it requires the authentication to be performed first or not.
 
+### Terms and Conditions
+
+There are two documents the user should be aware of: the Etvas Platform Terms and conditions (_Etvas T&C_) and the Product Terms and Conditions (_Product T&C_).
+
+As you should collect this information at different steps in your flow, we recommend including the _Etvas T&C_ in your own Terms and Conditions, so the user experience is improved by agreeing only once for both your application and Etvas Platform.
+
+However, the _Product T&C_'s are different for each product. There are two distinct cases: the first one is when the user purchases the product using the `showPurchase` flow, the second case is when the user can directly use a Bundled product by using `showBundledUse`.
+
+In the first case (use `showPurchase` flow), we got you covered. The user implicitly agrees to _Product T&C_ when the purchase button is pressed.
+
+The second case (directly use it through `showBundledUse`), the user does not see anywhere the _Product T&C_, which might generate problems.
+
+Displaying the T&C's for Etvas and Product are your application responsibility, but Etvas Automat provides for you a convenient method to get the two URL's:
+
+```
+const options = {
+  productId: '12345678-1234-1234-4123-123456789012'
+}
+// get T&C (or Terms Of Service) for Etvas and Product
+const urls = automat.getTOS(options)
+const agreeEtvas = confirm('Please read ' + urls.etvas + '. Do you agree?')
+const agreeProduct = confirm('Please read ' + urls.product + '. Do you agree?')
+```
+
+As you can see, this is a quick way to get both URL's for _Etvas T&C_ and _Product T&C_, for one product.
+
+If you have multiple bundled products, or if you need these URL's at different steps in your flow, you can use:
+
+```
+// get the Etvas Platform T&C (or Terms Of Service)
+const etvasTOSUrl = automat.getEtvasTOS()
+
+// get the Product T&V (or Terms Of Service)
+const productId = '12345678-1234-1234-4123-123456789012'
+const productTOSUrl = automat.getProductTOS(productId)
+```
+
 ### Authentication (`connect` and `logout`)
 
 When displaying the authenticated content (`showMyProducts`, `showSettings`) or when the purchase flow must happen, you must connect the Etvas Platform to your OpenID Authentication server. This means you must call the `connect` function on Etvas Automat, which will open a small popup window that gives the user the means to login (or automatically register!!) in Etvas using your authentication server.

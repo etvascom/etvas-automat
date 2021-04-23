@@ -6,7 +6,7 @@ const getSrc = () =>
   `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/my-products`
 
 const createIframe = () => {
-  const style = 'height: 100%;width: 100%;border:none;'
+  const style = 'width: 100%;border:none;'
 
   return dom.createElement('iframe', {
     id: 'etvas-my-products-iframe',

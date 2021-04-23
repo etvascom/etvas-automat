@@ -8,7 +8,7 @@ const getSrc = pId =>
   )}/purchase/${pId}`
 
 export const open = (placeholder, options) => {
-  const style = 'height: 100%;width: 100%;border:none;'
+  const style = 'width: 100%;border:none;'
 
   const iframe = dom.createElement('iframe', {
     id: 'etvas-product-purchase-iframe',

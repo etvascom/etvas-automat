@@ -13,7 +13,7 @@ const getHeaders = () => [
   },
   { name: 'Authorization', value: config.get('accessToken') },
   { name: 'x-amz-user-agent', value: 'aws-amplify/2.0.2' },
-  { name: 'x-api-key', value: config.get('etvasApiKey') }
+  { name: 'x-api-key', value: config.get('etvasGraphQLApiKey') }
 ]
 
 const initializeAxios = () => {

@@ -11,7 +11,7 @@ export const open = (productId, placeholder, options) => {
   const locale = config.get('locale', 'en')
 
   const iframe = dom.createElement('iframe', {
-    style: 'height: 100%;width: 100%;border:none;',
+    style: 'width: 100%;border:none;',
     id: `etvas-product-details-${productId}-iframe`,
     src: `${config.get(
       'etvasURL'

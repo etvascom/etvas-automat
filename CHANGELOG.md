@@ -1,5 +1,7 @@
 # Changelog
 
+- Version `0.1.2`
+  - fixed duplicate query for branding
 - Version `0.1.1`
   - Add support for `configure` to read and / or update configuration values
   - Add documentation (still WIP)

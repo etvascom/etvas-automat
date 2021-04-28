@@ -1,4 +1,4 @@
-import { config } from '@/config'
+import { config, BRANDING_KEY } from '@/config'
 import { dom } from '@/lib/dom'
 
 import { fetchBranding } from './fetchBranding'
@@ -14,19 +14,22 @@ const handle = async event => {
   if (!iframe) {
     return
   }
-  let branding = config.get('branding')
+  let branding = config.get(BRANDING_KEY)
   if (!branding) {
     branding = await fetchBranding()
+    config.put(BRANDING_KEY)
   }
 
-  iframe.contentWindow.postMessage(
-    {
-      namespace: 'etvas',
-      event: 'response.cssVars',
-      payload: branding
-    },
-    '*'
-  )
+  if (branding) {
+    iframe.contentWindow.postMessage(
+      {
+        namespace: 'etvas',
+        event: 'response.cssVars',
+        payload: branding
+      },
+      '*'
+    )
+  }
 }
 
 export const branding = {

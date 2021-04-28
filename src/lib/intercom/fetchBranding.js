@@ -33,7 +33,6 @@ export const fetchBranding = async (slug = null) => {
     if (!branding) {
       return null
     }
-    config.put('branding', branding)
     return branding
   } catch (err) {
     console.error('Error getting branding information', err)

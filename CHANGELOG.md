@@ -1,5 +1,7 @@
 # Changelog
 
+- Version `0.2.0`
+  - added support for custom branding
 - Version `0.1.2`
   - fixed duplicate query for branding
 - Version `0.1.1`

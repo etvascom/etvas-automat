@@ -162,12 +162,13 @@ Still, there are cases when you will want to alter this default behavior and use
 
 > **Note** Calling the branding methods requires initialization.
 
-Setting up a custom branding is straightforward: at a minimum, you should setup an `accentColor` in your branding object like this:
+Setting up a custom branding is straightforward: at a minimum, you should setup an `accentColor` and a `brandColor` in your branding object like this:
 
 ```
 // Define the branding
 const branding = {
   accentColor: '#336699',
+  brandColor: '#990000'
 }
 
 // Setup the branding in Etvas Automat
@@ -214,6 +215,8 @@ if (!branding) {
 
 // customize the accent color to be red
 branding.accentColor = '#990000'
+// customize the brand color to be blue
+branding.brandColor = '#000099'
 
 // persist the branding
 branding.setBranding(branding)
@@ -228,13 +231,15 @@ const brandingOptions = {
   fetchIfNeeded: true,  // fetch only if branding is not present
   storeResult: true,    // store the fetched branding object
   custom: {             // apply the custom accentColor
-    accentColor: '#990000'
+    accentColor: '#990000',
+    brandColor: '#000099'
   }
 }
 
 const branding = await automat.retrieveBranding(brandingOptions)
 
 assert.strictEqual(branding.accentColor, '#990000')
+assert.strictEqual(branding.brandColor, '#000099')
 ```
 
 > **Note**: the branding object contains more than one or two colors. For the purposes of Etvas Automat displaying product cards, pages and product uses, only the `accentColor` is used for now. You should expect more values and customization options in the following implementations.

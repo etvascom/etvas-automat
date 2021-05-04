@@ -17,10 +17,10 @@ const handle = async event => {
   let branding = config.get(BRANDING_KEY)
   if (!branding) {
     branding = await fetchBranding()
-    config.put(BRANDING_KEY)
   }
 
   if (branding) {
+    config.put(BRANDING_KEY, branding)
     iframe.contentWindow.postMessage(
       {
         namespace: 'etvas',

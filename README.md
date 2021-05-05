@@ -242,7 +242,7 @@ assert.strictEqual(branding.accentColor, '#990000')
 assert.strictEqual(branding.brandColor, '#000099')
 ```
 
-> **Note**: the branding object contains more than one or two colors. For the purposes of Etvas Automat displaying product cards, pages and product uses, only the `accentColor` is used for now. You should expect more values and customization options in the following implementations.
+> **Note**: the branding object contains more than one or two colors. For the purposes of Etvas Automat displaying product cards, pages and product uses, only the `accentColor` and `brandColor` are used for now. You should expect more values and customization options in the following implementations.
 
 ### Authentication (`connect` and `logout`)
 

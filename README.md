@@ -225,7 +225,7 @@ branding.setBranding(branding)
 The entire flow described above can be achieved with the following method:
 
 ```
-import automat from '@etvas/etvas-automat
+import automat from '@etvas/etvas-automat'
 
 const brandingOptions = {
   fetchIfNeeded: true,  // fetch only if branding is not present

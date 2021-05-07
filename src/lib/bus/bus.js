@@ -79,7 +79,18 @@ const fire = (action, payload) => {
 }
 
 // Install global listener
-dom.listen(dom.window, 'message', onMessage)
+dom.listen(dom.window, 'message', event => {
+  const iFrames = document.getElementsByTagName('IFRAME')
+  for (let i = 0; i < iFrames.length; i++) {
+    const win =
+      iFrames[i].contentWindow || iFrames[i].contentDocument.defaultView
+    if (win === event.source) {
+      event._iframeSource = iFrames[i]
+      break
+    }
+  }
+  onMessage(event)
+})
 
 export const bus = {
   on,

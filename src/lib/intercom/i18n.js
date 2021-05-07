@@ -5,14 +5,12 @@ import { getIframeIdByOrigin } from './utils'
 
 const canHandle = event => event?.data?.event === 'etvas.i18n.request'
 
-const handle = ({ origin }) => {
+const handle = ({ origin, _iframeSource }) => {
   const iframeId = getIframeIdByOrigin(origin, false)
-  const iframe = dom.getElement(iframeId)
+  const iframe = dom.getElement(iframeId) || _iframeSource
   if (!iframe) {
-    console.error('Could not find iframe ', iframeId)
     return
   }
-  console.info('posting message i18n.response', config.get('locale'))
   iframe.contentWindow.postMessage(
     {
       event: 'etvas.i18n.change',

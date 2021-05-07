@@ -1,15 +1,17 @@
 import { config, BRANDING_KEY } from '@/config'
 
-const requiredBranding = ['accentColor', 'brandColor']
+const requiredBrandingKeys = ['accentColor', 'brandColor']
 
 export default branding => {
   if (!branding) {
     config.clear(BRANDING_KEY)
     return true
   }
-  const missingKey = requiredBranding.find(key => !!branding[key])
+  const missingKey = requiredBrandingKeys.find(key => !branding[key])
   if (missingKey) {
-    console.error(`Invalid branding (${missingKey} is required)`)
+    console.error(
+      `Invalid branding (${missingKey} is required). Branding not set.`
+    )
     return false
   }
 

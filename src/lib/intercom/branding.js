@@ -27,14 +27,15 @@ const respond = (iframe, payload) => {
 
 const getIframeInfo = ({ origin, _iframeSource }) => {
   const iframeId = getIframeIdByOrigin(origin, false)
-  const iframe = dom.getElement(iframeId)
-  if (iframe) {
-    return {
-      iframe,
-      isBundled: true
-    }
+  const iframeBundled = dom.getElement(iframeId)
+  if (!iframeBundled && !_iframeSource) {
+    return null
   }
-  return _iframeSource ? { iframe: _iframeSource, isBundled: false } : null
+
+  return {
+    iframe: iframeBundled || _iframeSource,
+    isBundled: !!iframeBundled
+  }
 }
 
 const handleBundledBranding = async (iframe, customBranding) => {

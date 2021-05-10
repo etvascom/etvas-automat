@@ -14,5 +14,10 @@ export {
   showProductUse,
   getProductRecommendation,
   showBundledUse,
-  getTOS
+  getTOS,
+  setBranding,
+  getBranding,
+  hasBranding,
+  fetchBranding,
+  retrieveBranding
 } from '@/usecases'

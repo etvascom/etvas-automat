@@ -154,6 +154,96 @@ const productId = '12345678-1234-1234-4123-123456789012'
 const productTOSUrl = automat.getProductTOS(productId)
 ```
 
+### Branding
+
+Etvas Automat gives you full flexibility about the branding used to display various content. Out of the box, Etvas Automat will ensure the appropriate branding (the one configured in your account on [Partners Studio](https://partners.helloetvas.com)) is used for everything.
+
+Still, there are cases when you will want to alter this default behavior and use a different branding. For this case, Etvas Automat exposes all the methods you need to manage the appearance for the pages or fragments you display.
+
+> **Note** Calling the branding methods requires initialization.
+
+Setting up a custom branding is straightforward: at a minimum, you should setup an `accentColor` and a `brandColor` in your branding object like this:
+
+```
+// Define the branding
+const branding = {
+  accentColor: '#336699',
+  brandColor: '#990000'
+}
+
+// Setup the branding in Etvas Automat
+automat.setBranding(branding)
+```
+
+From the moment you setup your custom branding, everything you display will respect the accent color you defined.
+
+You can easily check the existing branding:
+
+```
+const branding = automat.getBranding()
+```
+
+Please note the `getBranding` method can return `null` if no branding was ever setup. If you call, for example, `showProductCard`, the branding will be automatically filled in if empty. In the case you setup a custom branding, the default one (setup in your [Partners Studio](https://partners.helloetvas.com) account will no longer be used).
+
+Besides get and set, you can force fetch the branding from the [Partners Studio](https://partners.helloetvas.com) like this:
+
+```
+const branding = await automat.fetchBranding()
+```
+
+> **Note**: when fetching branding, do not expect to also be stored. If you want to persist the branding, you should call `automat.setBranding(branding)` after fetching.
+
+If you no longer want to use the custom branding and let the default behavior kick in, you can clear the branding storage like this:
+
+```
+automat.clearBranding()
+```
+
+> **Note**: this will clear the stored branding, either custom or default. The next call to `show###` will automatically populate the branding storage.
+
+Let's take a typical flow:
+
+```
+import automat from '@etvas/etvas-automat
+
+// get the current branding
+let branding = automat.getBranding()
+if (!branding) {
+  // fetch a fresh default branding from Partners Studio account
+  branding = await automat.fetchBranding()
+}
+
+// customize the accent color to be red
+branding.accentColor = '#990000'
+// customize the brand color to be blue
+branding.brandColor = '#000099'
+
+// persist the branding
+branding.setBranding(branding)
+```
+
+The entire flow described above can be achieved with the following method:
+
+```
+import automat from '@etvas/etvas-automat'
+
+const brandingOptions = {
+  fetchIfNeeded: true,  // fetch only if branding is not present
+  storeResult: true,    // store the fetched branding object
+  custom: {             // apply the custom accentColor
+    accentColor: '#990000',
+    brandColor: '#000099'
+  }
+}
+
+const branding = await automat.retrieveBranding(brandingOptions)
+
+assert.strictEqual(branding.accentColor, '#990000')
+assert.strictEqual(branding.brandColor, '#000099')
+```
+
+> **Note**: the branding object contains more than one or two colors. For the purposes of Etvas Automat displaying product cards, pages and product uses, only the `accentColor` and `brandColor` are used for now. You should expect more values and customization options in the following implementations.
+
 ### Authentication (`connect` and `logout`)
 
 When displaying the authenticated content (`showMyProducts`, `showSettings`) or when the purchase flow must happen, you must connect the Etvas Platform to your OpenID Authentication server. This means you must call the `connect` function on Etvas Automat, which will open a small popup window that gives the user the means to login (or automatically register!!) in Etvas using your authentication server.

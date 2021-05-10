@@ -24,15 +24,15 @@ export const fetchBranding = async (slug = null) => {
         console.error('Could not identify slug from', url)
         return null
       }
+      slug = slug[1]
     }
-    const input = { slug: slug[1] }
+    const input = { slug }
     const response = await etvasQuery(QUERY_NAME, query, { input })
     const branding = response?.data?.[QUERY_NAME]
 
     if (!branding) {
       return null
     }
-    config.put('branding', branding)
     return branding
   } catch (err) {
     console.error('Error getting branding information', err)

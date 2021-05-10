@@ -69,8 +69,8 @@ const handle = async event => {
 
   const branding = config.get(BRANDING_KEY)
   return info.isBundled
-    ? handleBundledBranding(branding, info.iframe)
-    : handleNormalBranding(branding, info.iframe)
+    ? handleBundledBranding(info.iframe, branding)
+    : handleNormalBranding(info.iframe, branding)
 }
 
 export const branding = {

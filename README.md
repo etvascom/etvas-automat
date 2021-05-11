@@ -378,7 +378,7 @@ As you can see, you have the option to customize the appearance of the product c
 
 `seeMoreText` - you can control what text should appear inside the link (or button). **Warning**: if you pass any value, you will lose the automatic multi-language for the link text. For example, if you pass: `seeMoreText: 'Please click`, this text will be displayed no matter what `locale` you specified at initialization time.
 
-`hideRating` - pass `true` to hide the product rating on your card. By default, the rating is shown, so there is no need to pass a `true` value.
+`hideRating` - pass `true` to hide the product rating in the product card. By default, the rating is shown, so there is no need to pass a `true` value.
 
 ### Display a product details page
 
@@ -426,7 +426,7 @@ const productDetailsOptions = {
 }
 ```
 
-`hideRating` - pass `true` to hide the product rating on your card. By default, the rating is shown, so there is no need to pass a `false` value.
+`hideRating` - pass `true` to hide the product rating on the main product card. By default, the rating is shown, so there is no need to pass a `false` value.
 
 ### Display Discover page
 

@@ -364,10 +364,21 @@ automat.showProductCard(
   {
     onDetailsClick: payload => {
       alert('User clicked on the product ' + payload.productId)
-    }
+    },
+    showSeeMore: 'link',
+    seeMoreText: 'Details',
+    hideRating: true
   }
 )
 ```
+
+As you can see, you have the option to customize the appearance of the product card through the `options` object. Specific, you have at your disposal the following keys to control the appearance:
+
+`showSeeMore` - you can pass the `false` value in order to hide the link altogether, `link` to show a link style action or `button` to show a button style action. **Warning**: if you pass a `false` value here, you must somehow handle the user click yourself (maybe clicking on the wrapper div or some other custom mechanism, implemented by you), so the `onDetailsClick` function will never be called.
+
+`seeMoreText` - you can control what text should appear inside the link (or button). **Warning**: if you pass any value, you will lose the automatic multi-language for the link text. For example, if you pass: `seeMoreText: 'Please click`, this text will be displayed no matter what `locale` you specified at initialization time.
+
+`hideRating` - pass `true` to hide the product rating on your card. By default, the rating is shown, so there is no need to pass a `true` value.
 
 ### Display a product details page
 
@@ -410,9 +421,12 @@ const productDetailsOptions = {
         showPurchase()
       }
     }
-  }
+  },
+  hideRating: true
 }
 ```
+
+`hideRating` - pass `true` to hide the product rating on your card. By default, the rating is shown, so there is no need to pass a `false` value.
 
 ### Display Discover page
 

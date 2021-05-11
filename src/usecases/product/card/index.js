@@ -2,17 +2,16 @@ import { dom } from '@/lib/dom'
 import { bus } from '@/lib/bus'
 import { config } from '@/config'
 
-const src = (productId, queryString = null) =>
-  `${config.get('etvasURL')}/embed/${config.get(
+const getSrc = (productId, options = {}, keys = []) => {
+  const qs = keys
+    .filter(key => options[key] !== undefined)
+    .map(key => `${key}=${encodeURIComponent(options[key])}`)
+    .join('&')
+  return `${config.get('etvasURL')}/embed/${config.get(
     'locale',
     'en'
-  )}/product/${productId}${
-    queryString
-      ? `?${Object.keys(queryString)
-          .map(key => `${key}=${queryString[key]}`)
-          .join('&')}`
-      : ''
-  }`
+  )}/product/${productId}${qs ? `?${qs}` : ''}`
+}
 
 const style = 'border:none;width:480px;height:240px;display:block;'
 
@@ -22,7 +21,9 @@ export const open = (
   options = {
     onDetailsClick: payload => {
       console.log('Product card clicked. Received:', payload)
-    }
+    },
+    hidePreview: false,
+    showSeeMore: 'link'
   }
 ) => {
   const el = dom.getElement(placeholder)
@@ -33,8 +34,14 @@ export const open = (
   if (!options?.append) {
     dom.clearElement(el)
   }
+
   const id = `etvas-product-card-${productId}-iframe`
-  const iframe = dom.createElement('iframe', { id, src: src(productId), style })
+  const src = getSrc(productId, options, [
+    'hideRating',
+    'showSeeMore',
+    'seeMoreText'
+  ])
+  const iframe = dom.createElement('iframe', { id, src, style })
   const wrapper = dom.createElement('div', { innerHTML: '' })
   wrapper.appendChild(iframe)
   el.innerHTML = wrapper.innerHTML

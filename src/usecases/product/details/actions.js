@@ -2,22 +2,28 @@ import { dom } from '@/lib/dom'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
 
+const getSrc = (productId, options = {}, keys = []) => {
+  const qs = keys
+    .filter(key => options[key] !== undefined)
+    .map(key => `${key}=${encodeURIComponent(options[key])}`)
+    .join('&')
+  return `${config.get('etvasURL')}/embed/${config.get(
+    'locale',
+    'en'
+  )}/product/${productId}/details${qs ? `?${qs}` : ''}`
+}
+
+const style = 'width:100%; border:none; display:block;'
+
 export const open = (productId, placeholder, options) => {
   if (!productId) {
     console.error('You must provide a product id in options')
     return
   }
 
-  const locale = config.get('locale', 'en')
-
-  const iframe = dom.createElement('iframe', {
-    style: 'width: 100%;border:none;',
-    id: `etvas-product-details-${productId}-iframe`,
-    src: `${config.get(
-      'etvasURL'
-    )}/embed/${locale}/product/${productId}/details`
-  })
-
+  const id = `etvas-product-details-${productId}-iframe`
+  const src = getSrc(productId, options, ['hideRating'])
+  const iframe = dom.createElement('iframe', { id, src, style })
   const container = dom.getElement(placeholder)
 
   if (!options?.append) {

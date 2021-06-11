@@ -1,11 +1,14 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
+import { ssoAppend } from '@/lib/ssoAppend'
 
 const getSrc = pId =>
-  `${config.get('etvasURL')}/embed/${config.get(
-    'locale',
-    'en'
-  )}/purchase/${pId}`
+  ssoAppend(
+    `${config.get('etvasURL')}/embed/${config.get(
+      'locale',
+      'en'
+    )}/purchase/${pId}`
+  )
 
 export const open = (placeholder, options) => {
   const style = 'width: 100%;border:none;'

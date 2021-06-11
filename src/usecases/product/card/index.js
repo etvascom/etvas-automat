@@ -1,16 +1,19 @@
 import { dom } from '@/lib/dom'
 import { bus } from '@/lib/bus'
 import { config } from '@/config'
+import { ssoAppend } from '@/lib/ssoAppend'
 
 const getSrc = (productId, options = {}, keys = []) => {
   const qs = keys
     .filter(key => options[key] !== undefined)
     .map(key => `${key}=${encodeURIComponent(options[key])}`)
     .join('&')
-  return `${config.get('etvasURL')}/embed/${config.get(
-    'locale',
-    'en'
-  )}/product/${productId}${qs ? `?${qs}` : ''}`
+  return ssoAppend(
+    `${config.get('etvasURL')}/embed/${config.get(
+      'locale',
+      'en'
+    )}/product/${productId}${qs ? `?${qs}` : ''}`
+  )
 }
 
 const style = 'border:none;width:480px;height:240px;display:block;'

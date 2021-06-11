@@ -1,16 +1,19 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
+import { ssoAppend } from '@/lib/ssoAppend'
 
 const getSrc = (productId, options = {}, keys = []) => {
   const qs = keys
     .filter(key => options[key] !== undefined)
     .map(key => `${key}=${encodeURIComponent(options[key])}`)
     .join('&')
-  return `${config.get('etvasURL')}/embed/${config.get(
-    'locale',
-    'en'
-  )}/product/${productId}/details${qs ? `?${qs}` : ''}`
+  return ssoAppend(
+    `${config.get('etvasURL')}/embed/${config.get(
+      'locale',
+      'en'
+    )}/product/${productId}/details${qs ? `?${qs}` : ''}`
+  )
 }
 
 const style = 'width:100%; border:none; display:block;'
@@ -41,9 +44,8 @@ export const open = (productId, placeholder, options) => {
   }
 
   if (options?.actionButton?.onPurchase) {
-    bus.on('on-product-purchase', payload => {
-      const oidc = config.get('oidc')
-      options.actionButton.onPurchase({ oidc, ...payload })
-    })
+    bus.on('on-product-purchase', payload =>
+      options.actionButton.onPurchase(payload)
+    )
   }
 }

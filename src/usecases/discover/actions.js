@@ -1,9 +1,12 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
+import { ssoAppend } from '@/lib/ssoAppend'
 
 const getSrc = () =>
-  `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/discover`
+  ssoAppend(
+    `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/discover`
+  )
 
 const createIframe = () => {
   const style = 'height: 100%;width: 100%;border:none;'
@@ -43,8 +46,7 @@ export const open = (placeholder, options) => {
 
   if (options?.actionButton?.onPurchase) {
     bus.on('on-product-purchase', payload => {
-      const oidc = config.get('oidc')
-      options.actionButton.onPurchase({ oidc, ...payload })
+      options.actionButton.onPurchase(payload)
     })
   }
 }

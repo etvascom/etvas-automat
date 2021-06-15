@@ -2,6 +2,7 @@ import { dom } from '@/lib/dom'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
 import { ssoAppend } from '@/lib/ssoAppend'
+import { handleSSO } from '@/usecases/sso/handleSSO'
 
 const getSrc = () =>
   ssoAppend(
@@ -18,43 +19,39 @@ const createIframe = () => {
   })
 }
 
-export const open = (placeholder, options) => {
+export const open = async (placeholder, params, options) => {
+  await handleSSO(options)
+
   const container = dom.getElement(placeholder)
-  if (!options?.append) {
+  if (!params?.append) {
     dom.clearElement(container)
   }
   const iframe = createIframe()
   container.appendChild(iframe)
 
-  if (options?.productCard?.onDetailsClick) {
+  if (params?.onAction) {
     bus.on('open-product-details', payload => {
+      params.onAction({ ...payload, action: 'openProductDetails' })
       const exists = dom.getElement('#etvas-my-products-iframe')
-      if (!exists) {
-        throw new Error('# Discover no longer in DOM')
-      }
-      options.productCard.onDetailsClick(payload)
+      return exists ? true : '#off'
     })
-  }
-
-  if (options?.onDiscoverClick) {
     bus.on('navigate-to', payload => {
       const { destination } = payload || {}
       if (destination === 'discover') {
-        options.onDiscoverClick()
+        params.onAction({ action: 'openDiscover' })
       }
-      return '#nonce'
+      const exists = dom.getElement('#etvas-my-products-iframe')
+      return exists ? true : '#off'
     })
-  }
-
-  if (options?.actionButton?.onPurchase) {
     bus.on('on-product-purchase', payload => {
-      options.actionButton.onPurchase(payload)
+      params.onAction({ ...payload, action: 'openProductPurchase' })
+      const exists = dom.getElement('#etvas-my-products-iframe')
+      return exists ? true : '#off'
     })
-  }
-
-  if (options?.actionButton?.onUse) {
     bus.on('open-product-use', payload => {
-      options.actionButton.onUse(payload)
+      params.onAction({ ...payload, action: 'openProductUse' })
+      const exists = dom.getElement('#etvas-my-products-iframe')
+      return exists ? true : '#off'
     })
   }
 }

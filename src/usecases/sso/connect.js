@@ -5,7 +5,7 @@ import { obtainTokens } from './obtainTokens'
 
 export const connect = async (
   tokens,
-  options = { skipExchange: true },
+  options = { skipExchange: false },
   callback = null
 ) => {
   let { idToken, accessToken, refreshToken } = await unpackTokens(tokens)

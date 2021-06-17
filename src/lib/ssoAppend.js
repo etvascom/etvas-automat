@@ -1,5 +1,5 @@
 import { config } from '@/config'
-import { encodeB64 } from './b64'
+import { urlSafeEncodeB64 } from './b64'
 
 const SSO_QUERY_VAR = '_sso'
 
@@ -9,6 +9,6 @@ export const ssoAppend = url => {
     return url
   }
   const separator = url.indexOf('?') >= 0 ? '&' : '?'
-  const queryValue = encodeB64(refreshToken, { urlSafe: true })
+  const queryValue = urlSafeEncodeB64(refreshToken)
   return `${url}${separator}${SSO_QUERY_VAR}=${queryValue}`
 }

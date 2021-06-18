@@ -31,6 +31,9 @@ const initializeAxios = () => {
         cfg.headers[name] = value
       }
     })
+    if (cfg.headers.Authorization) {
+      delete cfg.headers['x-api-key']
+    }
     return cfg
   }, Promise.reject)
 

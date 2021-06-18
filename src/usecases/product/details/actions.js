@@ -31,7 +31,7 @@ export const open = async (placeholder, params, options) => {
   await handleSSO(options)
 
   const id = `etvas-product-details-${params.productId}-iframe`
-  const src = getSrc(params.productId, params, ['hideRating'])
+  const src = getSrc(params, ['hideRating'])
   const iframe = dom.createElement('iframe', { id, src, style })
 
   if (!params?.append) {

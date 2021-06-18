@@ -1,6 +1,4 @@
 import { config } from '@/config'
-
-import { unpackTokens } from './unpackTokens'
 import { obtainTokens } from './obtainTokens'
 
 export const connect = async (
@@ -8,9 +6,9 @@ export const connect = async (
   options = { skipExchange: false },
   callback = null
 ) => {
-  let { idToken, accessToken, refreshToken } = await unpackTokens(tokens)
+  let { idToken, accessToken, refreshToken } = tokens
   if (!options.skipExchange && (!idToken || !accessToken)) {
-    const newTokens = obtainTokens(refreshToken)
+    const newTokens = await obtainTokens(refreshToken)
     idToken = newTokens.idToken
     accessToken = newTokens.accessToken
   }

@@ -7,7 +7,7 @@ export {
   logout,
   showDiscover,
   showSettings,
-  showPurchase,
+  showProductPurchase,
   showMyProducts,
   showProductCard,
   showProductDetails,

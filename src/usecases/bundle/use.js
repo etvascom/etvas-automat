@@ -26,5 +26,5 @@ export const open = (container, params) => {
     dom.clearElement(node)
   }
 
-  container.appendChild(iframe)
+  node.appendChild(iframe)
 }

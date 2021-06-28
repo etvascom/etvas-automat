@@ -1,6 +1,6 @@
 {
   "name": "@etvas/etvas-automat",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Etvas injector",
   "main": "dist/etvas-automat.min.js",
   "homepage": "https://github.com/etvascom/etvas-automat",

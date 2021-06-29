@@ -1,1 +1,1 @@
-export { open as showPurchase } from './actions'
+export { open as showProductPurchase } from './actions'

@@ -28,7 +28,7 @@ const onMessage = event => {
   listeners[action].forEach(handler => {
     try {
       const result = handler(data.payload)
-      if (result === '#nonce') {
+      if (result === '#off') {
         off(action, handler)
       }
     } catch (err) {

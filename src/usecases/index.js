@@ -1,5 +1,5 @@
 export * from './initialize'
-export * from './connect'
+export * from './sso'
 export * from './product'
 export * from './recommendations'
 export * from './discover'

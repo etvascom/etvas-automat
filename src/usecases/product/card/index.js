@@ -1,68 +1,75 @@
 import { dom } from '@/lib/dom'
 import { bus } from '@/lib/bus'
 import { config } from '@/config'
+import { ssoAppend } from '@/lib/ssoAppend'
+import { handleSSO } from '@/usecases/sso/handleSSO'
 
-const getSrc = (productId, options = {}, keys = []) => {
+const getSrc = (params, keys = []) => {
   const qs = keys
-    .filter(key => options[key] !== undefined)
-    .map(key => `${key}=${encodeURIComponent(options[key])}`)
+    .filter(key => params[key] !== undefined)
+    .map(key => `${key}=${encodeURIComponent(params[key])}`)
     .join('&')
-  return `${config.get('etvasURL')}/embed/${config.get(
-    'locale',
-    'en'
-  )}/product/${productId}${qs ? `?${qs}` : ''}`
+  return ssoAppend(
+    `${config.get('etvasURL')}/embed/${config.get('locale', 'de')}/product/${
+      params.productId
+    }${qs ? `?${qs}` : ''}`
+  )
 }
 
 const style = 'border:none;width:480px;height:240px;display:block;'
 
-export const open = (
-  productId,
-  placeholder,
-  options = {
-    onDetailsClick: payload => {
-      console.log('Product card clicked. Received:', payload)
-    },
-    hidePreview: false,
-    showSeeMore: 'link'
+const _defaultParams = {
+  onAction: payload => {
+    console.log('Product card clicked. Received:', payload)
+  },
+  hideRating: false,
+  showSeeMore: 'link'
+}
+
+export const open = async (placeholder, params, options) => {
+  if (!params.productId) {
+    throw new Error('Params must contain a productId')
   }
-) => {
+
+  await handleSSO(options)
+
+  params = {
+    ..._defaultParams,
+    ...params
+  }
+
   const el = dom.getElement(placeholder)
   if (!el) {
     console.error('Cannot find DOM node', placeholder)
     return
   }
-  if (!options?.append) {
+  if (!params?.append) {
     dom.clearElement(el)
   }
 
-  const id = `etvas-product-card-${productId}-iframe`
-  const src = getSrc(productId, options, [
-    'hideRating',
-    'showSeeMore',
-    'seeMoreText'
-  ])
+  const id = `etvas-product-card-${params.productId}-iframe`
+  const src = getSrc(params, ['hideRating', 'showSeeMore', 'seeMoreText'])
   const iframe = dom.createElement('iframe', { id, src, style })
   const wrapper = dom.createElement('div', { innerHTML: '' })
   wrapper.appendChild(iframe)
   el.innerHTML = wrapper.innerHTML
 
-  if (options?.onDetailsClick) {
+  if (params?.onAction) {
     bus.on('open-product-details', payload => {
       const exists = dom.getElement(`#${id}`)
-      if (!exists) {
-        throw new Error('# Product card no longer in DOM')
+      if (exists && payload?.productId === params.productId) {
+        params.onAction({ ...payload, action: 'openProductDetails' })
+        return true
       }
-      if (payload?.productId === productId) {
-        options.onDetailsClick(payload)
-      }
+      return exists ? true : '#off'
     })
-  }
-
-  if (options?.onUse) {
     bus.on('open-product-use', payload => {
-      if (payload?.productId === productId) {
-        options.onUse(payload)
+      const exists = dom.getElement(`#${id}`)
+      if (exists && payload?.productId === params.productId) {
+        params.onAction({ ...payload, action: 'openProductUse' })
+        return
       }
+      return exists ? true : '#off'
     })
   }
 

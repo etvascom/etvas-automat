@@ -1,8 +1,6 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
-
-const getSrc = () =>
-  `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/settings`
+import { ssoAppend } from '@/lib/ssoAppend'
 
 export const open = (placeholder, options) => {
   const style = 'width:100%;border:none;'
@@ -10,7 +8,9 @@ export const open = (placeholder, options) => {
   const iframe = dom.createElement('iframe', {
     id: 'etvas-settings-iframe',
     style,
-    src: getSrc()
+    src: ssoAppend(
+      `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/settings`
+    )
   })
 
   const container = dom.getElement(placeholder)

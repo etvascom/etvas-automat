@@ -6,19 +6,25 @@ const getOriginURL = url => {
   return stripped.endsWith('/') ? stripped.substr(0, -1) : stripped
 }
 
-export const open = (url, placeholder, options) => {
-  const id = `etvas-embeddedApp-${encode(getOriginURL(url))}-iframe`
+export const open = (container, params) => {
+  if (!params?.url) {
+    throw new Error('Params must contain the URL')
+  }
+  const node = dom.getElement(container)
+  if (!node) {
+    console.error('Error: cannot find node', container)
+    return
+  }
+  const id = `etvas-embeddedApp-${encode(getOriginURL(params.url))}-iframe`
   const iframe = dom.createElement('iframe', {
     style: 'height: 100%;width: 100%;border:none;',
     id,
-    src: url
+    src: params.url
   })
 
-  const container = dom.getElement(placeholder)
-
-  if (!options?.append) {
-    dom.clearElement(container)
+  if (!params?.append) {
+    dom.clearElement(node)
   }
 
-  container.appendChild(iframe)
+  node.appendChild(iframe)
 }

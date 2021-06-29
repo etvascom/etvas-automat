@@ -1,18 +1,35 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
+import { ssoAppend } from '@/lib/ssoAppend'
+import { handleSSO } from '@/usecases/sso/handleSSO'
 
-export const open = (productId, placeholder, options) => {
+export const open = async (placeholder, params, options) => {
+  if (!params?.productId) {
+    throw new Error('You must provide a productId in params')
+  }
+
+  const node = dom.getElement(placeholder)
+  if (!node) {
+    console.error('Cannot find container', placeholder)
+    return
+  }
+
+  await handleSSO(options)
+
   const locale = config.get('locale', 'en')
 
   const iframe = dom.createElement('iframe', {
     style: 'width: 100%;border:none;',
-    id: `etvas-product-use-${productId}-iframe`,
-    src: `${config.get('etvasURL')}/embed/${locale}/product/${productId}/use`
+    id: `etvas-product-use-${params.productId}-iframe`,
+    src: ssoAppend(
+      `${config.get('etvasURL')}/embed/${locale}/product/${
+        params.productId
+      }/use`
+    )
   })
 
-  const container = dom.getElement(placeholder)
-  if (!options?.append) {
-    dom.clearElement(container)
+  if (!params?.append) {
+    dom.clearElement(node)
   }
-  container.appendChild(iframe)
+  node.appendChild(iframe)
 }

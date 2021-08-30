@@ -109,6 +109,8 @@ This is an UUID that uniquely identifies your organization inside Etvas Ecosyste
 
 We support internationalization out of the box. Our I18N system will dynamically load the selected language dictionary and update the User Interface in an instant, providing for your customer the best experience available. We currently have dictionaries for `en` - English language and `de` - German language, with more coming.
 
+**Note**: Keep in mind that, for authenticated flows, the language set by user in his profile (or setup by the registration process) will take precedence over the configuration.
+
 ## The building blocks
 
 As mentioned before, Etvas Automat is designed as separate building blocks. This architecture allows you to take control over every rendered position, event and click the customer performs on the displayed content.
@@ -245,6 +247,8 @@ assert.strictEqual(branding.brandColor, '#000099')
 > **Note**: the branding object contains more than one or two colors. For the purposes of Etvas Automat displaying product cards, pages and product uses, only the `accentColor` and `brandColor` are used for now. You should expect more values and customization options in the following implementations.
 
 ### Authentication (`connect` and `logout`)
+
+@deprecated
 
 When displaying the authenticated content (`showMyProducts`, `showSettings`) or when the purchase flow must happen, you must connect the Etvas Platform to your OpenID Authentication server. This means you must call the `connect` function on Etvas Automat, which will open a small popup window that gives the user the means to login (or automatically register!!) in Etvas using your authentication server.
 
@@ -481,6 +485,40 @@ automat.showDiscover(
 )
 ```
 
+## Displaying user account settings
+
+By default, you can display the user account settings by simply calling the `showSettings` method, like this:
+
+```
+automat.showSettings('#placeholder', options)
+```
+
+If you want to append the iframe to the `#placeholder`, pass `append: true` in options. If the argument is omitted, the `#placeholder` HTML element will be cleared prior to injecting the `iframe`.
+
+```
+automat.showSettings('#placeholder', { append: true })
+```
+
+However, sometimes you might want to display only one tile from the user account settings. This can be possible by passing a tile name in the same `options` object we used above for `append`:
+
+```
+automat.showSettings('#placeholder', { tile: 'account' })
+```
+
+Please keep in mind that, when displaying only one tile, you are in charge of te general layout (if you want to display the tiles on two columns) and the tile title, which is missing when displaying only one tile, for maximum configuration.
+
+The available tiles are:
+
+1. `account` - displays the form with editable first and last name, read-only email and password and a dropdown for locale;
+2. `billing` - displays the billing information form
+3. `payment` - displays the payment method form (card information)
+4. `coupon` - displays a form for viewing or adding a rebate coupon
+5. `products` - displays a list of purchased products and exposes the ability to cancel a product subscription
+6. `payments` - displays the payments history and exposes the ability to download PDF invoices
+7. `imprint` - displays the Etvas GMBH Imprint and the link to Privacy Policy and Terms and Conditions
+
+If the specified tile is not available, a 404 page will be displayed.
+
 ---
 
 **TODO:**
@@ -488,7 +526,6 @@ automat.showDiscover(
 - purchase
 - use
 - my products
-- settings
 - bundled product
 
 ---

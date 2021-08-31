@@ -1,5 +1,8 @@
 # Changelog
 
+- version `1.0.4`
+  - added multiple options
+  - added tile option for user settings
 - Version `0.2.0`
   - added support for custom branding
 - Version `0.1.2`

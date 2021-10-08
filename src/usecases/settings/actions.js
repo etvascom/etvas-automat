@@ -6,9 +6,10 @@ export const open = (placeholder, options) => {
   const style = 'width:100%;border:none;'
 
   const tileURL = options?.tile ? `/${options.tile}` : ''
+  const iframeName = options?.tile ? `settings-${options.tile}` : 'settings'
 
   const iframe = dom.createElement('iframe', {
-    id: 'etvas-settings-iframe',
+    id: `etvas-${iframeName}-iframe`,
     style,
     src: ssoAppend(
       `${config.get('etvasURL')}/embed/${config.get(

@@ -25,11 +25,21 @@ export const open = async (placeholder, params, options) => {
   })
 
   if (params.onAction) {
-    bus.on('on-purchase-success', payload => {
-      params.onAction({ ...payload, action: 'openProductUse' })
+    bus.on('open-product-use', payload => {
+      const exists = dom.getElement(`#${id}`)
+      if (exists) {
+        params.onAction({ ...payload, action: 'openProductUse' })
+        return true
+      }
+      return '#off'
     })
     bus.on('on-purchase-cancelled', payload => {
-      params.onAction({ ...payload, action: 'purchaseCancelled' })
+      const exists = dom.getElement(`#${id}`)
+      if (exists) {
+        params.onAction({ ...payload, action: 'purchaseCancelled' })
+        return true
+      }
+      return '#off'
     })
   }
 

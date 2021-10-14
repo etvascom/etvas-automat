@@ -38,18 +38,27 @@ export const open = async (placeholder, params, options) => {
   if (params?.onAction && typeof params.onAction === 'function') {
     bus.on('open-product-details', payload => {
       const exists = dom.getElement(`#${id}`)
-      params.onAction({ ...payload, action: 'openProductDetails' })
-      return exists ? true : '#off'
+      if (exists) {
+        params.onAction({ ...payload, action: 'openProductDetails' })
+        return true
+      }
+      return '#off'
     })
     bus.on('open-product-use', payload => {
       const exists = dom.getElement(`#${id}`)
-      params.onAction({ ...payload, action: 'openProductUse' })
-      return exists ? true : '#off'
+      if (exists) {
+        params.onAction({ ...payload, action: 'openProductUse' })
+        return true
+      }
+      return '#off'
     })
     bus.on('on-product-purchase', payload => {
       const exists = dom.getElement(`#${id}`)
-      params.onAction({ ...payload, action: 'openProductPurchase' })
-      return exists ? true : '#off'
+      if (exists) {
+        params.onAction({ ...payload, action: 'openProductPurchase' })
+        return true
+      }
+      return '#off'
     })
   }
 }

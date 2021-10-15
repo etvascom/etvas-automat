@@ -42,21 +42,27 @@ export const open = async (placeholder, params, options) => {
 
   if (params.onAction && typeof params.onAction === 'function') {
     bus.on('open-product-use', payload => {
+      const exists = dom.getElement(`#${id}`)
+      if (!exists) {
+        return '#off'
+      }
       if (payload?.productId === params.productId) {
         params.onAction({ ...payload, action: 'showProductUse' })
       }
-      const exists = dom.getElement(`#${id}`)
-      return exists ? true : '#off'
+      return true
     })
     bus.on('on-product-purchase', payload => {
+      const exists = dom.getElement(`#${id}`)
+      if (!exists) {
+        return '#off'
+      }
       if (payload?.productId === params.productId) {
         params.onAction({
           ...payload,
           action: 'showProductPurchase'
         })
       }
-      const exists = dom.getElement(`#${id}`)
-      return exists ? true : '#off'
+      return true
     })
   }
 }

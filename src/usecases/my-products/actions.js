@@ -31,27 +31,39 @@ export const open = async (placeholder, params, options) => {
 
   if (params?.onAction) {
     bus.on('open-product-details', payload => {
-      params.onAction({ ...payload, action: 'openProductDetails' })
       const exists = dom.getElement('#etvas-my-products-iframe')
-      return exists ? true : '#off'
+      if (!exists) {
+        return '#off'
+      }
+      params.onAction({ ...payload, action: 'openProductDetails' })
+      return true
     })
     bus.on('navigate-to', payload => {
+      const exists = dom.getElement('#etvas-my-products-iframe')
+      if (!exists) {
+        return '#off'
+      }
       const { destination } = payload || {}
       if (destination === 'discover') {
         params.onAction({ action: 'openDiscover' })
       }
-      const exists = dom.getElement('#etvas-my-products-iframe')
-      return exists ? true : '#off'
+      return true
     })
     bus.on('on-product-purchase', payload => {
-      params.onAction({ ...payload, action: 'openProductPurchase' })
       const exists = dom.getElement('#etvas-my-products-iframe')
-      return exists ? true : '#off'
+      if (!exists) {
+        return '#off'
+      }
+      params.onAction({ ...payload, action: 'openProductPurchase' })
+      return true
     })
     bus.on('open-product-use', payload => {
-      params.onAction({ ...payload, action: 'openProductUse' })
       const exists = dom.getElement('#etvas-my-products-iframe')
-      return exists ? true : '#off'
+      if (!exists) {
+        return '#off'
+      }
+      params.onAction({ ...payload, action: 'openProductUse' })
+      return true
     })
   }
 }

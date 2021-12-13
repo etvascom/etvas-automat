@@ -3,19 +3,23 @@ import { config } from '@/config'
 import { bus } from '@/lib/bus'
 import { ssoAppend } from '@/lib/ssoAppend'
 import { handleSSO } from '@/usecases/sso/handleSSO'
+import { createQueryString } from '@/lib/createQueryString'
 
-const getSrc = () =>
+const getSrc = params =>
   ssoAppend(
-    `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/my-products`
+    `${config.get('etvasURL')}/embed/${config.get(
+      'locale',
+      'en'
+    )}/my-products${createQueryString(params)}`
   )
 
-const createIframe = () => {
+const createIframe = params => {
   const style = 'width: 100%;border:none;'
 
   return dom.createElement('iframe', {
     id: 'etvas-my-products-iframe',
     style,
-    src: getSrc()
+    src: getSrc(params)
   })
 }
 
@@ -26,7 +30,8 @@ export const open = async (placeholder, params, options) => {
   if (!params?.append) {
     dom.clearElement(container)
   }
-  const iframe = createIframe()
+
+  const iframe = createIframe(params)
   container.appendChild(iframe)
 
   if (params?.onAction) {

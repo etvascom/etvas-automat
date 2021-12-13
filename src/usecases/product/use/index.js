@@ -2,6 +2,7 @@ import { dom } from '@/lib/dom'
 import { config } from '@/config'
 import { ssoAppend } from '@/lib/ssoAppend'
 import { handleSSO } from '@/usecases/sso/handleSSO'
+import { createQueryString } from '@/lib/createQueryString'
 
 export const open = async (placeholder, params, options) => {
   if (!params?.productId) {
@@ -24,7 +25,7 @@ export const open = async (placeholder, params, options) => {
     src: ssoAppend(
       `${config.get('etvasURL')}/embed/${locale}/product/${
         params.productId
-      }/use`
+      }/use${createQueryString(params)}`
     )
   })
 

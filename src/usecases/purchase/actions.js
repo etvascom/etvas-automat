@@ -3,13 +3,13 @@ import { bus } from '@/lib/bus'
 import { config } from '@/config'
 import { ssoAppend } from '@/lib/ssoAppend'
 import { handleSSO } from '@/usecases/sso/handleSSO'
+import { createQueryString } from '@/lib/createQueryString'
 
-const getSrc = pId =>
+const getSrc = params =>
   ssoAppend(
-    `${config.get('etvasURL')}/embed/${config.get(
-      'locale',
-      'en'
-    )}/purchase/${pId}`
+    `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/purchase/${
+      params.productId
+    }${createQueryString(params)}`
   )
 
 export const open = async (placeholder, params, options) => {
@@ -21,7 +21,7 @@ export const open = async (placeholder, params, options) => {
   const iframe = dom.createElement('iframe', {
     id,
     style,
-    src: getSrc(params.productId)
+    src: getSrc(params)
   })
 
   if (params.onAction) {

@@ -2,20 +2,24 @@ import { dom } from '@/lib/dom'
 import { config } from '@/config'
 import { bus } from '@/lib/bus'
 import { ssoAppend } from '@/lib/ssoAppend'
+import { createQueryString } from '@/lib/createQueryString'
 import { handleSSO } from '@/usecases/sso/handleSSO'
 
-const getSrc = () =>
+const getSrc = params =>
   ssoAppend(
-    `${config.get('etvasURL')}/embed/${config.get('locale', 'en')}/discover`
+    `${config.get('etvasURL')}/embed/${config.get(
+      'locale',
+      'en'
+    )}/discover${createQueryString(params)}`
   )
 
-const createIframe = id => {
+const createIframe = (id, params) => {
   const style = 'height: 100%;width: 100%;border:none;'
 
   return dom.createElement('iframe', {
     id,
     style,
-    src: getSrc()
+    src: getSrc(params)
   })
 }
 
@@ -27,7 +31,7 @@ export const open = async (placeholder, params, options) => {
   }
 
   const id = 'etvas-discover-iframe'
-  const iframe = createIframe(id)
+  const iframe = createIframe(id, params)
 
   if (!params?.append) {
     dom.clearElement(container)

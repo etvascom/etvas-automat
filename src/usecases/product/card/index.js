@@ -3,16 +3,13 @@ import { bus } from '@/lib/bus'
 import { config } from '@/config'
 import { ssoAppend } from '@/lib/ssoAppend'
 import { handleSSO } from '@/usecases/sso/handleSSO'
+import { createQueryString } from '@/lib/createQueryString'
 
-const getSrc = (params, keys = []) => {
-  const qs = keys
-    .filter(key => params[key] !== undefined)
-    .map(key => `${key}=${encodeURIComponent(params[key])}`)
-    .join('&')
+const getSrc = params => {
   return ssoAppend(
     `${config.get('etvasURL')}/embed/${config.get('locale', 'de')}/product/${
       params.productId
-    }${qs ? `?${qs}` : ''}`
+    }${createQueryString(params)}`
   )
 }
 
@@ -48,7 +45,7 @@ export const open = async (placeholder, params, options) => {
   }
 
   const id = `etvas-product-card-${params.productId}-iframe`
-  const src = getSrc(params, ['hideRating', 'showSeeMore', 'seeMoreText'])
+  const src = getSrc(params)
   const iframe = dom.createElement('iframe', { id, src, style })
   const wrapper = dom.createElement('div', { innerHTML: '' })
   wrapper.appendChild(iframe)

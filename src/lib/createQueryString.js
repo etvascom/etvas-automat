@@ -3,8 +3,8 @@ export const createQueryString = (params, start = '?') => {
     return ''
   }
   const allowed = ['hideRating', 'showSeeMore', 'seeMoreText', 'bg']
-  const keys = Object.keys(params).reduce((keys, attribute) => {
-    if (allowed.includes(attribute) && params[attribute] !== undefined) {
+  const keys = allowed.reduce((keys, attribute) => {
+    if (params?.[attribute] !== undefined) {
       keys.push(`${attribute}=${encodeURIComponent(params[attribute])}`)
     }
     return keys

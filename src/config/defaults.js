@@ -4,5 +4,6 @@ export const defaults = {
   etvasGraphQLApiKey: process.env.ETVAS_GRAPHQL_API_KEY,
   'auth.region': process.env.ETVAS_REGION,
   'auth.userPoolId': process.env.ETVAS_USERPOOL_ID,
-  'auth.webClientId': process.env.ETVAS_WEBCLIENT_ID
+  'auth.webClientId': process.env.ETVAS_WEBCLIENT_ID,
+  zIndexModalIframe: process.env.ETVAS_Z_INDEX_MODAL_IFRAME || 50
 }

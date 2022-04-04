@@ -11,6 +11,7 @@ export {
   showMyProducts,
   showProductCard,
   showProductDetails,
+  showCashbackDetails,
   showProductUse,
   getProductRecommendation,
   showBundledUse,

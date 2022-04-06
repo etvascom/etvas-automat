@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document describes the ReST API exposed by Etvas Secure Suite.
+This document describes the REST API exposed by Etvas Secure Suite.
 
 In order to call any of the following described endpoints (unless otherwise specified), you need to [authenticate](#authentication) for obtaining a bearer token, which you will use with all the other requests. Also, every request must be [signed](#signing-requests).
 
@@ -862,9 +862,8 @@ TODO: describe
 
 ## Pagination
 
-TODO: describe the query parameters
-
-TODO: describe the response `links` format
+- `from` - **string**, pass last received nextPageToken
+- `count` - **number**, limit the received items per page
 
 ## Filtering
 

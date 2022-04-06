@@ -840,10 +840,6 @@ The cashback model is a representation of one of three types of cashbacks presen
 
 > Note: The `status` field will not be present if the user id is not specified in the request header.
 
-The `status` field ..
-
-TODO: complete
-
 ### Cashback history model
 
 TODO: describe
@@ -862,12 +858,145 @@ TODO: describe
 
 ## Pagination
 
-- `from` - **string**, pass last received nextPageToken
-- `count` - **number**, limit the received items per page
+You can paginate a list of objects by specifying a page size and supplying a page token in the `from` query parameter.
+
+By default, the page size will have a value of `100`, if not specified. If you chose to specify a page size, you must supply an integer value between `1` and `1000` (inclusive range).
+
+When requesting the first page, you will receive (along with the `items` array) a `nextPageToken` value. You can use that in order to get the next page. As long as there are items to be served (there are more pages to fetch), you will receive a valid `nextPageToken`. For the last chunk, the `nextPageToken` will have a `null` value, signalling the end of the collection.
+
+Assuming we have `7` cashbacks defined, let's look at a simple example which uses a page size of `4`:
+
+**First request**
+
+```http
+GET HTTP/1.1 /cashbacks?count=4
+Accept: application/json
+```
+
+**First response**
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+--
+{
+  "nextPageToken": "abcd",
+  "items": [
+    { id: '1', ...},
+    { id: '2', ...},
+    { id: '3', ...},
+    { id: '4', ...}
+  ]
+}
+```
+
+We **do** have a `nextPageToken` so we can fetch the next page:
+
+**Second request**
+
+```http
+GET HTTP/1.1 /cashbacks?count=4&from=abcd
+Accept: application/json
+```
+
+**Second response**
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+--
+{
+  "nextPageToken": null,
+  "items": [
+    { id: '5', ...},
+    { id: '6', ...},
+    { id: '7', ...}
+  ]
+}
+```
+
+We **do not** have a `nextPageToken`, so we know we reached the end of the collection and there are no subsequent pages to be fetched.
+
+However, there are cases when a `nextPageToken` is supplied in a response and the subsequent request using the received `nextPageToken` can return an empty `items` array. In this case, we guarantee a `null` value for `nextPageToken`.
+
+Assuming we have **8** cashbacks defined, let's look at an example using a page size of `4`:
+
+**First request**
+
+```http
+GET HTTP/1.1 /cashbacks?count=4
+Accept: application/json
+```
+
+**First response**
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+--
+{
+  "nextPageToken": "abcd",
+  "items": [
+    { id: '1', ...},
+    { id: '2', ...},
+    { id: '3', ...},
+    { id: '4', ...}
+  ]
+}
+```
+
+We **do** have a `nextPageToken` so we can fetch the next page:
+
+**Second request**
+
+```http
+GET HTTP/1.1 /cashbacks?count=4&from=abcd
+Accept: application/json
+```
+
+**Second response**
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+--
+{
+  "nextPageToken": "bcde",
+  "items": [
+    { id: '5', ...},
+    { id: '6', ...},
+    { id: '7', ...},
+    { id: '8', ...}
+  ]
+}
+```
+
+We have a `nextPageToken` so we fetch the next page:
+
+**Third request**
+
+```http
+GET HTTP/1.1 /cashbacks?count=4&from=bcde
+Accept: application/json
+```
+
+**Third response**
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+--
+{
+  "nextPageToken": null,
+  "items": []
+}
+```
+
+As you can see, there can be a case when, even if we respond with a `nextPageToken`, the subsequent request will yield an empty `items` array. However, such a response is guaranteed to have a `null` value for `nextPageToken`.
 
 ## Filtering
 
-TODO: describe
+Thr filtering operation applies only for fetching lists. Each list defines it's own filterable fields. If you try to
 
 ## Sorting
 
@@ -1014,6 +1143,39 @@ Content-Type: application/json
   "meta": {
     "userId": "1234",
     "reason": "The specified user was not found"
+  }
+}
+```
+
+### Validation Error
+
+This error applies to input fields, meaning fields and field values supplied by you (the caller) in query parameters, in body or in header. It occurs when one or more of the input fields are missing or have invalid values. The validity of an input field is typically tested by three criteria (in this order):
+
+- presence (if required),
+- data type (integer, string, number, date, ...)
+- format and value (non-zero, positive, after a specific date)
+
+For a specific field, once a validation rule fails, the system will not run any further validation rules.
+
+Let's take for example the `x-user-id` header you must supply for certain calls, and let's assume (!) that the system validates this field to be a required string of minimum 32 alpha-numeric characters.
+
+If you do not supply a value for `x-user-id`, the system will stop (for this field) at the required validation rule. Once you supply, for example, an integer value, the **required** rule will pass validation, but the **string** rule will not pass, so you will get another validation error for the same field. Following the same pattern, if you supply a short string this time, you will get another validation error, signalling an invalid content for the field value.
+
+A validation error response will contain in the `meta` object the field names as keys and the failed validation rule name as value. An example response looks like this:
+
+```http
+HTTP/1.1 422 Unprocessable Entity
+Content-Type: application/json
+--
+{
+  "error": true,
+  "status": 422,
+  "type": "ValidationError",
+  "message": "Invalid input",
+  "meta": {
+    "x-user-id": "string",
+    "date_from": "required",
+    "date_to": "required"
   }
 }
 ```

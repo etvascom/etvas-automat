@@ -78,11 +78,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "links": {
-    ...
-  },
-  "type": "offers",
-  "data": [
+  "nextPageToken": "generated-next-page-token",
+  "items": [
     {
       id: 'a4641108-cb99-4076-acf2-08508007f8ae',
       ...
@@ -106,7 +103,7 @@ Content-Type: application/json
 Please refer to:
 
 - [specifying user in request](#specify-user)
-- [pagination](#pagination) for how to paginate the received data and the structure of `links` in response
+- [pagination](#pagination) for how to paginate the received data.
 - [offer model](#offer-model) for the complete structure for the `data` array.
 - [filtering results](#filtering) for how to filter the results
 - [sorting results](#sorting) for how to sort the results
@@ -137,11 +134,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "type": "offers",
-  "data": {
-    id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-    ...
-  }
+  id: 'a4641108-cb99-4076-acf2-08508007f8ae',
+  ...
 }
 ```
 
@@ -181,11 +175,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "links": {
-    ...
-  },
-  "type": "cashbacks",
-  "data": [
+  "nextPageToken": "generated-next-page-token",
+  "items": [
     {
       id: 'a4641108-cb99-4076-acf2-08508007f8ae',
       ...
@@ -212,7 +203,7 @@ Content-Type: application/json
 
 Please refer to:
 
-- [pagination](#pagination) for how to paginate the received data and the structure of `links` in response
+- [pagination](#pagination) for how to paginate the received data.
 - [cashback model](#cashback-model) for the complete structure for the `data` array.
 - [filtering results](#filtering) for how to filter the results
 - [sorting results](#sorting) for how to sort the results
@@ -224,16 +215,13 @@ Error responses:
 
 ### Get cashback details
 
-> Note: this request takes into account the `x-user-id` header if present and not marked as _guest_.
-
-> **Warning:** If you want to include the history of the cashback (activations and more) for a specific user, you must include both the query parameter **and** the `x-user-id` header. If the user is not found, a [User Not Found error](#user-not-found-error) is returned.
+> Note: this request ignores the `x-user-id` header.
 
 ```http
-GET HTTP/1.1 /cashbacks/<cashback-id>?include=history
+GET HTTP/1.1 /cashbacks/<cashback-id>
 Accept: application/json
 Authorization: Bearer <access-token>
 x-signature: <computed-signature>
-x-user-id: <user-id>
 ```
 
 **Successful response:**
@@ -243,24 +231,15 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "type": "cashbacks",
-  "data": {
-    id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-    ...
-  },
-  "meta": {
-    "type": "history",
-    "data": [
-      ...
-    ]
-  }
+  id: 'a4641108-cb99-4076-acf2-08508007f8ae',
+  ...
 }
 ```
 
 Please refer to:
 
+- [pagination](#pagination) for how to paginate the received data.
 - [cashback model](#cashback-model) for the complete structure for the `data` object.
-- [cashback history model](#cashback-history-model) for the complete structure for the `meta.data` array.
 
 Error responses:
 
@@ -268,12 +247,12 @@ Error responses:
 - [Invalid Signature Error](#invalid-signature-error)
 - [Resource Not Found Error](#resource-not-found-error)
 
-### Activate a cashback for an user
+### Get cashback history
 
-> Note: this request requires the `x-user-id` header.
+> Note: this request requires `x-user-id` header.
 
 ```http
-PUT HTTP/1.1 /cashbacks/<cashback-id>
+GET HTTP/1.1 /cashbacks/<cashback-id>/history
 Accept: application/json
 Authorization: Bearer <access-token>
 x-signature: <computed-signature>
@@ -287,17 +266,45 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "type": "cashbacks",
-  "data": {
-    id: 'a4641108-cb99-4076-acf2-08508007f8ae',
+  "nextPageToken": "generated-next-page-token",
+  items: [
+    {
+      id: 'a4641108-cb99-4076-acf2-08508007f8ae',
+      ...
+    },
     ...
-  }
+  ]
 }
 ```
 
 Please refer to:
 
-- [cashback model](#cashback-model) for the complete structure for the `data` object.
+- [cashback history model](#cashback-history-model) for the complete structure for the `items` object.
+
+Error responses:
+
+- [Authorization Error](#authorization-error)
+- [Invalid Signature Error](#invalid-signature-error)
+- [Resource Not Found Error](#resource-not-found-error)
+- [User Not Found Error](#user-not-found-error)
+
+### Activate a cashback for an user
+
+> Note: this request requires the `x-user-id` header.
+
+```http
+PUT HTTP/1.1 /cashbacks/<cashback-id>/activate
+Accept: application/json
+Authorization: Bearer <access-token>
+x-signature: <computed-signature>
+x-user-id: <user-id>
+```
+
+**Successful response:**
+
+```http
+HTTP/1.1 204 No content
+```
 
 Error responses:
 
@@ -328,15 +335,13 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "links": {
-    ...
-  },
-  "type": "cashbacks",
-  "data": [
+  "nextPageToken": "generated-next-page-token",
+  "items": [
     {
       id: 'a4641108-cb99-4076-acf2-08508007f8ae',
       ...
-    }
+    },
+    ...
   ]
 }
 ```
@@ -351,7 +356,7 @@ Content-Type: application/json
 
 Please refer to:
 
-- [pagination](#pagination) for how to paginate the received data and the structure of `links` in response
+- [pagination](#pagination) for how to paginate the received data.
 - [cashback model](#cashback-model) for the complete structure for the `data` array.
 - [filtering results](#filtering) for how to filter the results
 - [sorting results](#sorting) for how to sort the results
@@ -366,8 +371,10 @@ Error responses:
 
 > Note: this endpoint is available only when the token is created with a `"grant_type": "admin_credentials"` when authorizing.
 
+> Note: this request takes into account the `x-user-id` header if present and not marked as _guest_.
+
 ```http
-PUT HTTP/1.1 /admin/cashbacks/<cashback-id>?pagination=1,100&sort=&filter=
+PUT HTTP/1.1 /admin/cashbacks/<cashback-id>/settle
 Accept: application/json
 Authorization: Bearer <access-token>
 x-signature: <computed-signature>
@@ -375,6 +382,18 @@ x-user-id: <a-user-id>
 ```
 
 **Successful response:**
+
+```http
+HTTP/1.1 204 No content
+```
+
+Error responses:
+
+- [Authorization Error](#authorization-error)
+- [Invalid Signature Error](#invalid-signature-error)
+- [Resource Not Found Error](#resource-not-found-error)
+- [User Not Found Error](#user-not-found-error)
+- [Action Error](#action-error)
 
 ## Services
 
@@ -405,11 +424,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "links": {
-    ...
-  },
-  "type": "services",
-  "data": [
+  "nextPageToken": "generated-next-page-token",
+  "items": [
     {
       id: 'a4641108-cb99-4076-acf2-08508007f8ae',
       ...
@@ -432,7 +448,7 @@ Content-Type: application/json
 
 Please refer to:
 
-- [pagination](#pagination) for how to paginate the received data and the structure of `links` in response
+- [pagination](#pagination) for how to paginate the received data.
 - [service model](#service-model) for the complete structure for the `data` array.
 - [filtering results](#filtering) for how to filter the results
 - [sorting results](#sorting) for how to sort the results
@@ -465,11 +481,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "type": "services",
-  "data":  {
-    id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-    ...
-  }
+  id: 'a4641108-cb99-4076-acf2-08508007f8ae',
+  ...
 }
 ```
 
@@ -493,10 +506,6 @@ Accept: application/json
 Authorization: Bearer <access-token>
 x-signature: <computed-signature>
 x-user-id: <a-user-id>
---
-{
-  "TODO": "purchase payload?"
-}
 ```
 
 **Successful response:**
@@ -506,17 +515,11 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "type": "services.purchase",
-  "data": {
-    "id": "979dc17c-7282-4c55-8417-d4fcb157eedb",
-    ...
-  }
+  "redirectURL": "redirect-url-to-purchase-web-page",
 }
 ```
 
-Please refer to:
-
-- [service model](#service-model) for the complete structure for the `data` object.
+TODO: what is this redirect?
 
 Error responses:
 
@@ -549,11 +552,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "links": {
-    ...
-  },
-  "type": "travel_deals",
-  "data": [
+  "nextPageToken": "generated-next-page-token",
+  "items": [
     {
       id: 'a4641108-cb99-4076-acf2-08508007f8ae',
       ...
@@ -576,7 +576,7 @@ Content-Type: application/json
 
 Please refer to:
 
-- [pagination](#pagination) for how to paginate the received data and the structure of `links` in response
+- [pagination](#pagination) for how to paginate the received data.
 - [travel deal model](#travel-deal-model) for the complete structure for the `data` array.
 - [filtering results](#filtering) for how to filter the results
 - [sorting results](#sorting) for how to sort the results
@@ -609,11 +609,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  "type": "travel_deals",
-  "data":  {
-    id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-    ...
-  }
+  id: 'a4641108-cb99-4076-acf2-08508007f8ae',
+  ...
 }
 ```
 
@@ -626,6 +623,8 @@ Error responses:
 - [Authorization Error](#authorization-error)
 - [Invalid Signature Error](#invalid-signature-error)
 - [Resource Not Found Error](#resource-not-found-error)
+
+---
 
 ## Specify user
 

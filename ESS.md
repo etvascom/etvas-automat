@@ -64,7 +64,7 @@ This endpoint retrieves a list of offers.
 **Request:**
 
 ```http
-GET HTTP/1.1 /offers?pagination=1,100&sort=&filter=
+GET HTTP/1.1 /offers?from=&count=&sort=&filter=
 Accept: application/json
 Authorization: Bearer <access-token>
 x-signature: <computed-signature>
@@ -81,15 +81,84 @@ Content-Type: application/json
   "nextPageToken": "generated-next-page-token",
   "items": [
     {
-      id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-      ...
-    }, {
-      id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-      ...
+      "actionText": "Buy now!",
+      "isDemo": false,
+      "createdAt": 1648629943135,
+      "name": "Product offer",
+      "imageURL": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/offer_assets/of-07b2f14f-0133-451f-8074-07f47f11c9ce/mainImage",
+      "organizationId": "be6a5228-ed2e-44f0-8851-f5f27041c459",
+      "updatedAt": 1648629943135,
+      "description": "Product offer",
+      "id": "of-07b2f14f-0133-451f-8074-07f47f11c9ce",
+      "productId": "pr-f79efb11-0cd3-4730-bdc1-eef854fd46d4",
+      "title": "Product offer",
+      "type": "product",
+      "campaignId": "ca-71757da9-bb6d-421f-afaf-618b4d750398",
+      "servicePartner": {
+        "id": "be6a5228-ed2e-44f0-8851-f5f27041c459",
+        "name": "EBank-Dev",
+        "logo": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/default_branding/logo.png",
+        "smallLogo": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/default_branding/logo-small.png"
+      },
+      "product": {
+        "id": "pr-f79efb11-0cd3-4730-bdc1-eef854fd46d4",
+        "price": 500,
+        "subscriptionType": "Recurring",
+        "subscriptionMonths": 3,
+        "trialPeriod": 3,
+        "trialUnit": "months",
+        "name": "Test product n1",
+        "imageURL": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/product_assets/pr-f79efb11-0cd3-4730-bdc1-eef854fd46d4/5a29b616-23c8-4db7-8b97-17e22fea7af9",
+        "mediaURLs": [
+          "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/product_assets/pr-f79efb11-0cd3-4730-bdc1-eef854fd46d4/2d0680c8-119d-4aa0-ba32-9e107fd9365c.png"
+        ],
+        "category": "Security",
+        "summary": "summary placeholder",
+        "description": "description placeholder",
+        "appURL": "https://partners.helloetvas.com/",
+        "appInNewTab": false,
+        "infoURL": "https://partners.helloetvas.com/",
+        "taxName": "10",
+        "taxRate": 10
+      }
     },
-    ...
+    {
+      "actionText": "Activate Now!",
+      "createdAt": 1648468438881,
+      "name": "Cashback Offer",
+      "imageURL": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/offer_assets/of-254ef26e-1af2-487a-902d-e08f07498131/mainImage",
+      "organizationId": "be6a5228-ed2e-44f0-8851-f5f27041c459",
+      "updatedAt": 1648468438881,
+      "description": "Reducere la snickers",
+      "id": "of-254ef26e-1af2-487a-902d-e08f07498131",
+      "cashbackId": "cr-5ce17661-eed4-4939-8645-259230b8fb70",
+      "title": "Adidas 10%",
+      "type": "cashback",
+      "campaignId": "ca-f2c35b04-db72-4a13-8203-e81f6cf43280",
+      "cashback": {
+        "summary": "ddaaa",
+        "logoURL": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/cashback_assets/cr-5ce17661-eed4-4939-8645-259230b8fb70/logoURL",
+        "createdAt": 1635938123498,
+        "discount": 10,
+        "imageURL": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/cashback_assets/cr-5ce17661-eed4-4939-8645-259230b8fb70/imageURL",
+        "organizationId": "be6a5228-ed2e-44f0-8851-f5f27041c459",
+        "updatedAt": 1639042715443,
+        "fixedValue": false,
+        "description": "ddaaa",
+        "id": "cr-5ce17661-eed4-4939-8645-259230b8fb70",
+        "compute": "ceil",
+        "title": "addd"
+      },
+      "servicePartner": {
+        "id": "be6a5228-ed2e-44f0-8851-f5f27041c459",
+        "name": "EBank",
+        "logo": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/default_branding/logo.png",
+        "smallLogo": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/default_branding/logo-small.png"
+      }
+    }
   ]
 }
+
 ```
 
 **Filterable fields**:
@@ -134,8 +203,39 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-  ...
+    "id": "of-254ef26e-1af2-487a-902d-e08f07498131",
+    "type": "cashback",
+    "actionText": "Activate Now!",
+    "isDemo": false,
+    "createdAt": 1648468438881,
+    "name": "Cashback Offer",
+    "imageURL": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/offer_assets/of-254ef26e-1af2-487a-902d-e08f07498131/mainImage",
+    "organizationId": "be6a5228-ed2e-44f0-8851-f5f27041c459",
+    "updatedAt": 1648468438881,
+    "description": "Reducere la snickers",
+    "cashbackId": "cr-5ce17661-eed4-4939-8645-259230b8fb70",
+    "title": "Adidas 10%",
+    "campaignId": "ca-f2c35b04-db72-4a13-8203-e81f6cf43280",
+    "cashback": {
+        "summary": "ddaaa",
+        "logoURL": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/cashback_assets/cr-5ce17661-eed4-4939-8645-259230b8fb70/logoURL",
+        "createdAt": 1635938123498,
+        "discount": 10,
+        "imageURL": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/cashback_assets/cr-5ce17661-eed4-4939-8645-259230b8fb70/imageURL",
+        "organizationId": "be6a5228-ed2e-44f0-8851-f5f27041c459",
+        "updatedAt": 1639042715443,
+        "fixedValue": false,
+        "description": "ddaaa",
+        "id": "cr-5ce17661-eed4-4939-8645-259230b8fb70",
+        "compute": "ceil",
+        "title": "addd"
+    },
+    "servicePartner": {
+        "id": "be6a5228-ed2e-44f0-8851-f5f27041c459",
+        "name": "EBank",
+        "logo": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/default_branding/logo.png",
+        "smallLogo": "https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/default_branding/logo-small.png"
+    }
 }
 ```
 
@@ -162,7 +262,7 @@ Get a list of all cashback objects.
 **Request:**
 
 ```http
-GET HTTP/1.1 /cashbacks?pagination=1,100&sort=&filter=
+GET HTTP/1.1 /cashbacks?from=&count=&sort=&filter=
 Accept: application/json
 Authorization: Bearer <access-token>
 x-signature: <computed-signature>
@@ -178,8 +278,20 @@ Content-Type: application/json
   "nextPageToken": "generated-next-page-token",
   "items": [
     {
-      id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-      ...
+      "id":"co-dd1d38ea-c602-4fb9-95c9-c36e2034c9c3",
+      "spId":"be6a5228-ed2e-44f0-8851-f5f27041c459",
+      "title":"Edeka",
+      "summary":"Summary about Edeka",
+      "imageURL":"https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/cashback_assets/co-dd1d38ea-c602-4fb9-95c9-c36e2034c9c3/imageURL",
+      "logoURL":"https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/cashback_assets/co-dd1d38ea-c602-4fb9-95c9-c36e2034c9c3/logoURL",
+      "discount":40,
+      "fixedValue":false,
+      "localBusiness":{
+          "location":{
+            "latitude":52.507502,
+            "longitude":13.4147385,
+          }
+      }
     }, {
       id: 'a4641108-cb99-4076-acf2-08508007f8ae',
       ...
@@ -231,8 +343,20 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 --
 {
-  id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-  ...
+  "id":"co-dd1d38ea-c602-4fb9-95c9-c36e2034c9c3",
+  "spId":"be6a5228-ed2e-44f0-8851-f5f27041c459",
+  "title":"Edeka",
+  "summary":"Summary about Edeka",
+  "imageURL":"https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/cashback_assets/co-dd1d38ea-c602-4fb9-95c9-c36e2034c9c3/imageURL",
+  "logoURL":"https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/cashback_assets/co-dd1d38ea-c602-4fb9-95c9-c36e2034c9c3/logoURL",
+  "discount":40,
+  "fixedValue":false,
+  "localBusiness":{
+      "location":{
+        "latitude":52.507502,
+        "longitude":13.4147385,
+      }
+  }
 }
 ```
 
@@ -321,7 +445,7 @@ Error responses:
 > Note: this request takes into account the `x-user-id` header if present and not marked as _guest_.
 
 ```http
-GET HTTP/1.1 /admin/cashbacks?pagination=1,100&sort=&filter=
+GET HTTP/1.1 /admin/cashbacks?from=&count=&sort=&filter=
 Accept: application/json
 Authorization: Bearer <access-token>
 x-signature: <computed-signature>
@@ -410,7 +534,7 @@ If the user id is specified, the returned services array will contain details ab
 **Request:**
 
 ```http
-GET HTTP/1.1 /services?pagination=1,100&sort=&filter=
+GET HTTP/1.1 /services?from=&count=&sort=&filter=
 Accept: application/json
 Authorization: Bearer <access-token>
 x-signature: <computed-signature>
@@ -427,9 +551,38 @@ Content-Type: application/json
   "nextPageToken": "generated-next-page-token",
   "items": [
     {
-      id: 'a4641108-cb99-4076-acf2-08508007f8ae',
-      ...
-    }, {
+      id: 'ba0db0e0-c10d-11ea-b3de-0242ac130004',
+      purchaseId: 'pu-bc2ecc4b-a55a-44f9-a97e-96be46f481cb',
+      purchaseStatus: 'Canceled',
+      trialEndsAt: undefined,
+      suspendedAt: undefined,
+      price: 1300,
+      subscriptionType: 'Recurring',
+      subscriptionMonths: 12,
+      trialPeriod: 3,
+      trialUnit: 'days',
+      name: 'Reachtag PHONE - Protects your phone from loss',
+      imageURL: 'https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/product_assets/ba0db0e0-c10d-11ea-b3de-0242ac130004/b1bf3fb1-159a-4133-b892-824639741ee9',
+      mediaURLs: [
+        'https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/product_assets/ba0db0e0-c10d-11ea-b3de-0242ac130004/aa9027ec-3b1d-4629-ab0d-c5187e2304e7.mp4'
+      ],
+      category: 'Sicherheit',
+      summary: 'If you lose your mobile phone, a finder can reach a contact person you have stored by the easiest and fastest way.',
+      description: 'Smartphones are the most frequently lost item. No item is lost more often in Germany. The phones are usually handed in, as is very often the case in local lost property offices. But there is one problem: mobile phones are difficult to identify. As soon as the battery runs out, the phones are hardly distinguishable from others ...',
+      appURL: 'https://brand.etvasapps-dev.xyz',
+      appInNewTab: false,
+      infoURL: 'https://reachtag.de/',
+      demo: false,
+      taxName: 'MwSt.',
+      taxRate: 19,
+      servicePartner: {
+        id: 'c1ae5fc2-9093-40ee-92cb-e87c69073f38',
+        name: 'Reachtag',
+        logo: 'https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/default_branding/logo.png',
+        smallLogo: 'https://etvas-public-assets-dev.s3.eu-central-1.amazonaws.com/default_branding/logo-small.png'
+      }
+    },
+    {
       id: 'a4641108-cb99-4076-acf2-08508007f8ae',
       ...
     },
@@ -538,7 +691,7 @@ If the user id is specified, the returned travels array will contain details abo
 **Request:**
 
 ```http
-GET HTTP/1.1 /travel_deals?pagination=1,100&sort=&filter=
+GET HTTP/1.1 /travel_deals?from=&count=&sort=&filter=
 Accept: application/json
 Authorization: Bearer <access-token>
 x-signature: <computed-signature>

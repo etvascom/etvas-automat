@@ -6,6 +6,15 @@ This document describes the ReST API exposed by Etvas Secure Suite.
 
 In order to call any of the following described endpoints (unless otherwise specified), you need to [authenticate](#authentication) for obtaining a bearer token, which you will use with all the other requests. Also, every request must be [signed](#signing-requests).
 
+## Environments
+
+Etvas Secure Suite offers two environments, paired with Etvas Cloud Structure.
+
+1. Production (Live): real environment, used for providing our services.
+2. Sandbox (Test): test environment, mirroring the logic and functionality of production. You can expect differences in data content and response times, but not in data structure and call signatures.
+
+> **Note**: Credentials for access and permission sets are distributed per environment.
+
 ## Authentication
 
 A `client-id` and a `client-secret` is required in order to obtain an `access_token`, used to call all other endpoints. This access token must be present in the `Authorization` header, prefixed with the word `Bearer `.
@@ -869,30 +878,172 @@ TODO: describe
 
 This section documents all the possible errors that the ESS API can return.
 
+Each error follows a common JSON format and the response will have a `4xx` or `5xx` HTTP status code.
+
+The common format for an error is:
+
+```json
+{
+  "error": true,
+  "status": 400,
+  "type": "Error",
+  "message": "Human readable message",
+  "meta": {
+    "reason": "Further describe the reason for which this error occurred."
+  }
+}
+```
+
+Field description:
+
+- `error` - **boolean**, always true; it is present for easily identify an error response if the HTTP client does not handle the HTTP status code properly;
+- `status` - **integer**, mirrors the HTTP status code sent with the response;
+- `type` - **string**, determines the type (or name) of the error;
+- `message` - **string**, a descriptive, human readable, English only message;
+- `meta` - **mixed**, an object or array of objects, used by the specific error to relay additional information; typically it will have a `reason` message explaining the error reason.
+
 ### Authentication Error
 
-TODO: describe
+This error occurs when the supplied `client_id`, `client_secret` and `grant_type` are missing, have invalid format or the pairing is invalid (for example, if you send a client id and secret registered for a client and you want a grant type for an admin). Also, this is the error when an invalid grant type is requested.
+
+An authentication error will have a status of 400 and the typical response will resemble:
+
+```http
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+--
+{
+  "error": true,
+  "status": 401,
+  "type": "AuthenticationError",
+  "message": "Invalid credentials",
+  "meta": {
+    "reason": "Invalid grant type"
+  }
+}
+```
 
 ### Authorization Error
 
-TODO: describe
+The authorization error can occur in multiple scenarios, but all of them are linked to the `access_token` you send with your requests. For example, we will return this error when the bearer token is missing, invalid, expired, not applicable (a client token is used for an admin endpoint) or in any other way not valid for the current request. It will always have a 403 HTTP status, and a typical response is:
+
+```http
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+--
+{
+  "error": true,
+  "status": 403,
+  "type": "AuthorizationError",
+  "message": "Invalid token received",
+  "meta": {
+    "reason": "Token expired"
+  }
+}
+```
 
 ### Invalid Signature Error
 
+This error is related to the signature you must compute and send in `x-signature` header. This error is unlikely to have any `meta` descriptive field.
+
+```http
+HTTP/1.1 406 Not Acceptable
+Content-Type: application/json
+--
+{
+  "error": true,
+  "status": 406,
+  "type": "SignatureError",
+  "message": "Signature invalid"
+}
+```
+
 ### Action Error
 
-TODO: describe
+This error describes an exception regarding a specific action you wanted to perform by calling the API. A typical response is described next:
 
-TODO: describe
+```http
+HTTP/1.1 409 Conflict
+Content-Type: application/json
+--
+{
+  "error": true,
+  "status": 409,
+  "type": "ActionError",
+  "message": "Cannot settle cashback",
+  "meta": {
+    "cashbackId": "1234",
+    "status": "activated",
+    "reason": "Only an awarded cashback can be settled"
+  }
+}
+```
 
 ### Resource Not Found Error
 
-TODO: describe
+This error describes a missing resource. You can encounter this error when yoy request a specific resource by id and that resource is nowhere to be found in the specified collection. It will always have a 404 HTTP status code:
+
+```http
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+--
+{
+  "error": true,
+  "status": 404,
+  "type": "ResourceNotFoundError",
+  "message": "Could not find specified resource",
+  "meta": {
+    "cashbackId": "1234",
+    "reason": "Cashback id 1234 could not be found in cashbacks"
+  }
+}
+```
 
 ### User Not Found Error
 
-TODO: describe
+This error occurs when a `x-user-id` header is specified and it cannot be ignored by the endpoint you are calling. It will always have a 423 HTTP status code:
+
+```http
+HTTP/1.1 423 Locked
+Content-Type: application/json
+--
+{
+  "error": true,
+  "status": 423,
+  "type": "UserNotFoundError",
+  "message": "Could not find specified user",
+  "meta": {
+    "userId": "1234",
+    "reason": "The specified user was not found"
+  }
+}
+```
 
 ### Server Error
 
-TODO: describe
+> **Note**: although improbable, such server errors are possible. In this case, please provide for Etvas as much information as possible, including the context in which you encountered the error.
+
+This error has a 500 HTTP status code and typically occurs in two scenarios: when the Etvas Secure Suite is misconfigured **or** when something went terribly wrong with a part of it. In this case, the error response behaves differently based on the environment you are calling.
+
+For **sandbox (testing) environment**, it will contain as much information as possible in the `meta` field (even a stack trace), making the error reporting process as easy and fast as possible. For the **production** environment, the `meta` field will be likely empty.
+
+In both cases, the logging system will log the full error details. A typical response looks like this:
+
+```http
+HTTP/1.1 500 Server Error
+Content-Type: application/json
+--
+{
+  "error": true,
+  "status": 500,
+  "type": "ServerError",
+  "message": "The server encountered an unrecoverable error",
+  "meta": {
+    "reason": "Unhandled error",
+    "context": {
+      "endpoint": "/cashbacks/1234",
+      "details": "Undefined is not a function in processCashback.ts line 21"
+    }
+  }
+}
+```

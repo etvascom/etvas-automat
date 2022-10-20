@@ -1,9 +1,9 @@
 import { config } from '@/config'
 import { etvasQuery } from '@/lib/xhr'
 
-const QUERY_NAME = 'getPortalBrandingBySlug'
+const QUERY_NAME = 'getPortalBranding'
 
-const query = `query ${QUERY_NAME}($input: SlugInput!) {
+const query = `query ${QUERY_NAME}($input: IDOrSlugInput!) {
   ${QUERY_NAME}(input: $input) {
     id
     name

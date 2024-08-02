@@ -3,6 +3,7 @@ import '@/lib/bus'
 
 export {
   initialize,
+  configure,
   connect,
   logout,
   showDiscover,

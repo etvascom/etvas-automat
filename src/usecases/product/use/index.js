@@ -1,5 +1,6 @@
 import { dom } from '@/lib/dom'
 import { config } from '@/config'
+import { bus } from '@/lib/bus'
 import { ssoAppend } from '@/lib/ssoAppend'
 import { handleSSO } from '@/usecases/sso/handleSSO'
 import { createQueryString } from '@/lib/createQueryString'
@@ -33,4 +34,18 @@ export const open = async (placeholder, params, options) => {
     dom.clearElement(node)
   }
   node.appendChild(iframe)
+
+  if (params?.onAction) {
+    bus.on('navigate-to', payload => {
+      const exists = dom.getElement('#etvas-my-products-iframe')
+      if (!exists) {
+        return '#off'
+      }
+      const { destination } = payload || {}
+      if (destination === 'discover') {
+        params.onAction({ action: 'openDiscover' })
+      }
+      return true
+    })
+  }
 }

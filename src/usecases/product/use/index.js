@@ -19,10 +19,11 @@ export const open = async (placeholder, params, options) => {
   await handleSSO(options)
 
   const locale = config.get('locale', 'en')
+  const iframeId = `etvas-product-use-${params.productId}-iframe`
 
   const iframe = dom.createElement('iframe', {
     style: 'width: 100%;border:none;',
-    id: `etvas-product-use-${params.productId}-iframe`,
+    id: iframeId,
     src: ssoAppend(
       `${config.get('etvasURL')}/embed/${locale}/product/${
         params.productId
@@ -37,7 +38,7 @@ export const open = async (placeholder, params, options) => {
 
   if (params?.onAction) {
     bus.on('navigate-to', payload => {
-      const exists = dom.getElement('#etvas-my-products-iframe')
+      const exists = dom.getElement(`#${iframeId}`)
       if (!exists) {
         return '#off'
       }
